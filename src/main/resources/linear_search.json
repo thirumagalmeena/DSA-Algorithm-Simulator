@@ -1,0 +1,47 @@
+{
+  "algorithm": {
+    "id": "linear_search",
+    "name": "Linear Search",
+    "category": "Searching Algorithms",
+    "description": "A simple searching algorithm that sequentially checks each element in a collection until the target element is found or the entire collection has been traversed."
+  },
+  "sections": [
+    {
+      "id": "analogy",
+      "label": "Analogy",
+      "content": "Imagine you're looking for a specific book in a disorganized bookshelf. You start from one end and examine each book one by one, checking the title until you either find the book you're looking for or reach the end of the shelf without finding it. This methodical, left-to-right examination is exactly how linear search works - it systematically checks every item in order until it finds what it's looking for or confirms it's not there."
+    },
+    {
+      "id": "concept",
+      "label": "Concept",
+      "content": "Linear Search (also known as Sequential Search) is the most basic searching algorithm that works by iterating through each element in a collection sequentially and comparing each element with the target value. The search continues until either the target element is found or the end of the collection is reached.\n\nKey Idea: Check every element in order - simple, reliable, but can be slow for large datasets since it may need to examine every single element."
+    },
+    {
+      "id": "process",
+      "label": "General Step-by-Step Process",
+      "content": "```mermaid\nflowchart TD\n    A[Start Linear Search] --> B[Initialize index i = 0]\n    B --> C{i < length of array?}\n    C -->|No| D[Target not found]\n    C -->|Yes| E{arr[i] == target?}\n    E -->|Yes| F[Target found at index i]\n    E -->|No| G[Increment i: i = i + 1]\n    G --> C\n    F --> H[Return index i]\n    D --> I[Return -1 or not found]\n```\n\n**Process Breakdown:**\n1. Start from the first element (index 0)\n2. Compare current element with target value\n3. If they match, return the current index\n4. If they don't match, move to the next element\n5. Repeat steps 2-4 until either:\n   - Target is found (success)\n   - End of collection is reached (target not found)"
+    },
+    {
+      "id": "example",
+      "label": "Example Search",
+      "content": "**Array:** `[15, 7, 23, 42, 8, 19]`\n**Target:** `42`\n\n**Search Process:**\n- Check index 0: `15` ≠ `42` → continue\n- Check index 1: `7` ≠ `42` → continue\n- Check index 2: `23` ≠ `42` → continue\n- Check index 3: `42` = `42` → **FOUND!**\n\n**Result:** Target found at index 3\n\n**Another Example (Target not found):**\n**Target:** `10`\n\n**Search Process:**\n- Check index 0: `15` ≠ `10` → continue\n- Check index 1: `7` ≠ `10` → continue\n- Check index 2: `23` ≠ `10` → continue\n- Check index 3: `42` ≠ `10` → continue\n- Check index 4: `8` ≠ `10` → continue\n- Check index 5: `19` ≠ `10` → continue\n- Reached end of array → **NOT FOUND**\n\n**Result:** Target not found in array"
+    },
+    {
+      "id": "properties",
+      "label": "Algorithm Properties",
+      "content": "### Time Complexity:\n- **Best Case:** O(1) - when target is the first element\n- **Worst Case:** O(n) - when target is the last element or not present\n- **Average Case:** O(n) - target is somewhere in the middle\n\n### Space Complexity:\n- **O(1)** - Linear search only requires constant additional space for variables\n\n### Characteristics:\n- **Data Structure Compatibility:** Works on any sequential data structure (arrays, linked lists, etc.)\n- **Data Requirement:** Does not require data to be sorted\n- **Completeness:** Guaranteed to find the target if it exists in the collection\n\n### When to Use Linear Search:\n\n** Suitable for:**\n- Small datasets (n < 100)\n- Unsorted data\n- Simple implementations and prototyping\n- Educational purposes (easy to understand)\n- Situations where data is frequently updated (no sorting overhead)\n- When you need to find the first occurrence\n\n** Not suitable for:**\n- Large sorted datasets (use Binary Search instead)\n- Performance-critical applications with large n\n- Frequently searched static datasets\n\n### Advantages:\n1. **Simple to implement and understand**\n2. **Works on any data structure with sequential access**\n3. **No pre-processing required** (data doesn't need to be sorted)\n4. **Reliable** - always finds the element if it exists\n\n### Disadvantages:\n1. **Inefficient for large datasets** - O(n) time complexity\n2. **Poor performance** compared to binary search on sorted data\n3. **Not optimal** when multiple searches are needed on the same dataset\n\nLinear Search is fundamental and serves as a building block for understanding more complex searching algorithms. While inefficient for large datasets, its simplicity makes it perfect for small collections or when data cannot be sorted."
+    }
+  ],
+  "code_examples": {
+    "python": "def linear_search(arr, target):\n    for i in range(len(arr)):\n        if arr[i] == target:\n            return i\n    return -1",
+    "javascript": "function linearSearch(arr, target) {\n    for (let i = 0; i < arr.length; i++) {\n        if (arr[i] === target) {\n            return i;\n        }\n    }\n    return -1;\n}",
+    "java": "public static int linearSearch(int[] arr, int target) {\n    for (int i = 0; i < arr.length; i++) {\n        if (arr[i] == target) {\n            return i;\n        }\n    }\n    return -1;\n}", 
+    "cpp": "int linearSearch(int arr[], int n, int target) {\n    for (int i = 0; i < n; i++) {\n        if (arr[i] == target) {\n            return i;\n        }\n    }\n    return -1;\n}",
+    "c": "int linearSearch(int arr[], int n, int target) {\n    for (int i = 0; i < n; i++) {\n        if (arr[i] == target) {\n            return i;\n        }\n    }\n    return -1;\n}"
+},
+  "metadata": {
+    "difficulty": "Beginner",
+    "last_updated": "2024-01-15",
+    "tags": ["searching", "sequential", "brute-force", "simple"]
+  }
+}

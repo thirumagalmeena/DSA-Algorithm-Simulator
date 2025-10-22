@@ -1,0 +1,47 @@
+{
+  "algorithm": {
+    "id": "quick_sort",
+    "name": "Quick Sort",
+    "category": "Sorting Algorithms",
+    "description": "An efficient divide-and-conquer sorting algorithm that works by selecting a 'pivot' element and partitioning the array around it, then recursively sorting the sub-arrays."
+  },
+  "sections": [
+    {
+      "id": "analogy",
+      "label": "Analogy",
+      "content": "Imagine you're organizing a bookshelf by author's last name. Instead of comparing every book with every other book, you pick one book as a reference point (say, by author 'King'). You then put all books by authors coming before 'King' alphabetically on the left, and all books by authors coming after 'King' on the right. Now you have two smaller piles to sort. For each pile, you again pick a reference book and repeat the process. Soon, all your books are perfectly organized with much less effort than comparing each book with every other book."
+    },
+    {
+      "id": "concept",
+      "label": "Concept",
+      "content": "Quick Sort is a highly efficient divide-and-conquer sorting algorithm that works by selecting a 'pivot' element from the array and partitioning the other elements into two sub-arrays according to whether they are less than or greater than the pivot. The sub-arrays are then sorted recursively.\n\n**Key Idea:** Choose a pivot, partition the array around it (so all smaller elements go left, all larger go right), then recursively apply the same process to the left and right partitions."
+    },
+    {
+      "id": "process",
+      "label": "General Step-by-Step Process",
+      "content": "```mermaid\nflowchart TD\n    A[Start Quick Sort] --> B{base case: array size <= 1?}\n    B -->|Yes| Z[Return sorted array]\n    B -->|No| C[Choose Pivot Element]\n    C --> D[Partition array around pivot]\n    D --> E[Recursively sort left partition]\n    E --> F[Recursively sort right partition]\n    F --> G[Combine: left + pivot + right]\n    G --> Z\n\n    subgraph Partition Process\n        H[Initialize pointers i, j]\n        H --> I{Compare elements}\n        I -->|element <= pivot| J[Swap and move pointer]\n        I -->|element > pivot| K[Move pointer]\n        J --> I\n        K --> I\n        I -->|Partition complete| L[Place pivot in final position]\n    end\n```\n\n**Process Breakdown:**\n1. **Base Case:** If array has 0 or 1 elements, it's already sorted\n2. **Choose Pivot:** Select an element as the pivot\n3. **Partition:** Rearrange array so all elements < pivot come before, all elements > pivot come after\n4. **Recurse:** Apply quick sort to left and right partitions\n5. **Combine:** The array is now sorted (left partition + pivot + right partition)"
+    },
+    {
+      "id": "example",
+      "label": "Example Sorting",
+      "content": "**Initial Array:** `[10, 7, 8, 9, 1, 5]`\n**Pivot Choice:** Last element (5)\n\n**First Partition:**\n- Partition around pivot 5: `[1, 5, 8, 9, 10, 7]`\n- Pivot 5 is now at correct position (index 1)\n\n**Left Partition [1]:** Already sorted (base case)\n\n**Right Partition [8, 9, 10, 7]:**\n- Choose pivot 7 (last element)\n- Partition: `[7, 9, 10, 8]`\n- Left of 7: `[]` (empty)\n- Right of 7: `[9, 10, 8]`\n\n**Sort [9, 10, 8]:**\n- Choose pivot 8\n- Partition: `[8, 10, 9]`\n- Left of 8: `[]`\n- Right of 8: `[10, 9]`\n\n**Sort [10, 9]:**\n- Choose pivot 9\n- Partition: `[9, 10]`\n\n**Final Sorted Array:** `[1, 5, 7, 8, 9, 10]`"
+    },
+    {
+      "id": "properties",
+      "label": "Algorithm Properties",
+      "content": "### Time Complexity:\n- **Best Case:** O(n log n) - when pivot divides array into equal halves\n- **Worst Case:** O(n²) - when pivot is always smallest or largest element\n- **Average Case:** O(n log n)\n\n### Space Complexity:\n- **O(log n)** - for recursion stack in average case\n- **O(n)** - worst case recursion stack\n\n### Stability:\n- **Not Stable** - equal elements may change relative order\n\n### In-Place:\n- **Yes** - can be implemented to use constant extra space\n\n### When to Use Quick Sort:\n\n**✅ Suitable for:**\n- Large datasets\n- General-purpose sorting\n- Situations where average-case performance matters\n- In-memory sorting\n- When cache performance is important\n\n**❌ Not suitable for:**\n- Data that is already sorted or reverse sorted\n- Situations requiring guaranteed O(n log n) performance\n- Stable sorting requirements\n- Very small arrays (insertion sort might be better)\n\n### Pivot Selection Strategies:\n1. **First/Last Element:** Simple but vulnerable to worst-case\n2. **Middle Element:** Better for pre-sorted data\n3. **Random Element:** Avoids worst-case on specific patterns\n4. **Median-of-Three:** Chooses median of first, middle, last\n\n### Optimization Tips:\n1. **Use Insertion Sort** for small sub-arrays (typically < 10 elements)\n2. **Tail Recursion Elimination** to reduce stack depth\nn3. **Randomized Pivot** to avoid worst-case scenarios\n4. **Three-way Partitioning** for arrays with many duplicates\n\nQuick Sort is often the preferred choice for general-purpose sorting due to its excellent average-case performance and cache efficiency, though it requires careful implementation to avoid worst-case scenarios."
+    }
+  ],
+  "code_examples": {
+    "python": "def quick_sort(arr):\n    if len(arr) <= 1:\n        return arr\n    \n    pivot = arr[len(arr) // 2]\n    left = [x for x in arr if x < pivot]\n    middle = [x for x in arr if x == pivot]\n    right = [x for x in arr if x > pivot]\n    \n    return quick_sort(left) + middle + quick_sort(right)\n\n# In-place version\ndef quick_sort_inplace(arr, low=0, high=None):\n    if high is None:\n        high = len(arr) - 1\n    \n    if low < high:\n        pi = partition(arr, low, high)\n        quick_sort_inplace(arr, low, pi - 1)\n        quick_sort_inplace(arr, pi + 1, high)\n\ndef partition(arr, low, high):\n    pivot = arr[high]\n    i = low - 1\n    \n    for j in range(low, high):\n        if arr[j] <= pivot:\n            i += 1\n            arr[i], arr[j] = arr[j], arr[i]\n    \n    arr[i + 1], arr[high] = arr[high], arr[i + 1]\n    return i + 1",
+    "javascript": "function quickSort(arr) {\n    if (arr.length <= 1) {\n        return arr;\n    }\n    \n    const pivot = arr[Math.floor(arr.length / 2)];\n    const left = arr.filter(x => x < pivot);\n    const middle = arr.filter(x => x === pivot);\n    const right = arr.filter(x => x > pivot);\n    \n    return quickSort(left).concat(middle, quickSort(right));\n}\n\n// In-place version\nfunction quickSortInPlace(arr, low = 0, high = arr.length - 1) {\n    if (low < high) {\n        const pi = partition(arr, low, high);\n        quickSortInPlace(arr, low, pi - 1);\n        quickSortInPlace(arr, pi + 1, high);\n    }\n}\n\nfunction partition(arr, low, high) {\n    const pivot = arr[high];\n    let i = low - 1;\n    \n    for (let j = low; j < high; j++) {\n        if (arr[j] <= pivot) {\n            i++;\n            [arr[i], arr[j]] = [arr[j], arr[i]];\n        }\n    }\n    \n    [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];\n    return i + 1;\n}",
+    "java": "public class QuickSort {\n    public static void quickSort(int[] arr) {\n        quickSort(arr, 0, arr.length - 1);\n    }\n    \n    private static void quickSort(int[] arr, int low, int high) {\n        if (low < high) {\n            int pi = partition(arr, low, high);\n            quickSort(arr, low, pi - 1);\n            quickSort(arr, pi + 1, high);\n        }\n    }\n    \n    private static int partition(int[] arr, int low, int high) {\n        int pivot = arr[high];\n        int i = low - 1;\n        \n        for (int j = low; j < high; j++) {\n            if (arr[j] <= pivot) {\n                i++;\n                int temp = arr[i];\n                arr[i] = arr[j];\n                arr[j] = temp;\n            }\n        }\n        \n        int temp = arr[i + 1];\n        arr[i + 1] = arr[high];\n        arr[high] = temp;\n        \n        return i + 1;\n    }\n}",
+    "cpp": "#include <vector>\nusing namespace std;\n\nvoid quickSort(vector<int>& arr, int low, int high) {\n    if (low < high) {\n        int pi = partition(arr, low, high);\n        quickSort(arr, low, pi - 1);\n        quickSort(arr, pi + 1, high);\n    }\n}\n\nint partition(vector<int>& arr, int low, int high) {\n    int pivot = arr[high];\n    int i = low - 1;\n    \n    for (int j = low; j < high; j++) {\n        if (arr[j] <= pivot) {\n            i++;\n            swap(arr[i], arr[j]);\n        }\n    }\n    \n    swap(arr[i + 1], arr[high]);\n    return i + 1;\n}",
+    "c": "void quickSort(int arr[], int low, int high) {\n    if (low < high) {\n        int pi = partition(arr, low, high);\n        quickSort(arr, low, pi - 1);\n        quickSort(arr, pi + 1, high);\n    }\n}\n\nint partition(int arr[], int low, int high) {\n    int pivot = arr[high];\n    int i = low - 1;\n    \n    for (int j = low; j < high; j++) {\n        if (arr[j] <= pivot) {\n            i++;\n            int temp = arr[i];\n            arr[i] = arr[j];\n            arr[j] = temp;\n        }\n    }\n    \n    int temp = arr[i + 1];\n    arr[i + 1] = arr[high];\n    arr[high] = temp;\n    \n    return i + 1;\n}"
+  },
+  "metadata": {
+    "difficulty": "Intermediate",
+    "last_updated": "2024-01-15",
+    "tags": ["sorting", "divide-and-conquer", "in-place", "recursive"]
+  }
+}

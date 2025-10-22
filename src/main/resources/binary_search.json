@@ -1,0 +1,47 @@
+{
+  "algorithm": {
+    "id": "binary_search",
+    "name": "Binary Search",
+    "category": "Searching Algorithms",
+    "description": "An efficient search algorithm that finds the position of a target value within a sorted array by repeatedly dividing the search interval in half."
+  },
+  "sections": [
+    {
+      "id": "analogy",
+      "label": "Analogy",
+      "content": "Imagine you're looking for a specific word in a dictionary. Instead of reading every word from the beginning (which would take forever), you open the dictionary to the middle. If the word you're looking for comes alphabetically before the word on that page, you know it must be in the first half. So you take that first half and again open to its middle page. You keep repeating this process - each time eliminating half of the remaining pages - until you find your word. This is exactly how binary search works!"
+    },
+    {
+      "id": "concept",
+      "label": "Concept",
+      "content": "Binary Search is an efficient algorithm for finding an item from a sorted list of items. It works by repeatedly dividing in half the portion of the list that could contain the item, until you've narrowed down the possible locations to just one.\n\n**Key Idea:** By leveraging the sorted nature of the data, each comparison allows you to eliminate half of the remaining elements, making it dramatically faster than linear search for large datasets."
+    },
+    {
+      "id": "process",
+      "label": "General Step-by-Step Process",
+      "content": "```mermaid\nflowchart TD\n    A[Start Binary Search] --> B[Initialize low = 0, high = n-1]\n    B --> C{low <= high?}\n    C -->|No| Z[Element Not Found]\n    C -->|Yes| D[Calculate mid = low + high / 2]\n    D --> E{Compare arr[mid] with target}\n    E -->|arr[mid] = target| F[Element Found at index mid]\n    E -->|arr[mid] < target| G[Search right half<br>low = mid + 1]\n    E -->|arr[mid] > target| H[Search left half<br>high = mid - 1]\n    G --> C\n    H --> C\n```\n\n**Process Breakdown:**\n1. Start with the entire sorted array as the search space\n2. Calculate the middle index of the current search space\n3. Compare the middle element with the target value\n4. If they match, return the index\n5. If target is smaller, repeat with the left half\n6. If target is larger, repeat with the right half\n7. Continue until the element is found or search space is empty"
+    },
+    {
+      "id": "example",
+      "label": "Example Search",
+      "content": "**Sorted Array:** `[2, 5, 8, 12, 16, 23, 38, 45, 67, 89]`\n**Target:** `23`\n\n**Step 1:** low=0, high=9, mid=4 → arr[4]=16\n- 16 < 23, so search right half → low=5, high=9\n\n**Step 2:** low=5, high=9, mid=7 → arr[7]=45\n- 45 > 23, so search left half → low=5, high=6\n\n**Step 3:** low=5, high=6, mid=5 → arr[5]=23\n- Match found! Return index 5\n\n**Total comparisons:** 3 (vs 6 with linear search)"
+    },
+    {
+      "id": "properties",
+      "label": "Algorithm Properties",
+      "content": "### Time Complexity:\n- **Best Case:** O(1) - when the middle element is the target\n- **Worst Case:** O(log n) - when searching for first/last element or element not present\n- **Average Case:** O(log n)\n\n### Space Complexity:\n- **Iterative:** O(1) - constant space for variables\n- **Recursive:** O(log n) - due to call stack in recursion\n\n### Requirements:\n- **Sorted Input:** The array must be sorted for binary search to work\n- **Random Access:** Requires direct access to any element by index\n\n### When to Use Binary Search:\n\n** Suitable for:**\n- Large sorted datasets\n- Frequent search operations on static data\n- Situations where data can be kept sorted\n- Database indexing and information retrieval\n- Finding boundaries in numerical problems\n\n** Not suitable for:**\n- Unsorted data (must sort first)\n- Linked lists (no random access)\n- Very small datasets (linear search might be faster)\n- Dynamic data with frequent insertions/deletions\n\n### Advantages:\n- Extremely efficient for large datasets\n- Simple to implement\n- Guaranteed logarithmic time complexity\n- Widely used in computer science applications\n\n### Limitations:\n- Requires sorted data as precondition\n- Overhead of maintaining sorted order for dynamic data\n- Not suitable for unsorted or frequently changing data"
+    }
+  ],
+  "code_examples": {
+    "python": "def binary_search(arr, target):\n    low, high = 0, len(arr) - 1\n    \n    while low <= high:\n        mid = (low + high) // 2\n        \n        if arr[mid] == target:\n            return mid\n        elif arr[mid] < target:\n            low = mid + 1\n        else:\n            high = mid - 1\n    \n    return -1  # Target not found",
+    "javascript": "function binarySearch(arr, target) {\n    let low = 0;\n    let high = arr.length - 1;\n    \n    while (low <= high) {\n        const mid = Math.floor((low + high) / 2);\n        \n        if (arr[mid] === target) {\n            return mid;\n        } else if (arr[mid] < target) {\n            low = mid + 1;\n        } else {\n            high = mid - 1;\n        }\n    }\n    \n    return -1;  // Target not found\n}",
+    "java": "public static int binarySearch(int[] arr, int target) {\n    int low = 0;\n    int high = arr.length - 1;\n    \n    while (low <= high) {\n        int mid = low + (high - low) / 2;\n        \n        if (arr[mid] == target) {\n            return mid;\n        } else if (arr[mid] < target) {\n            low = mid + 1;\n        } else {\n            high = mid - 1;\n        }\n    }\n    \n    return -1;  // Target not found\n}",
+    "cpp": "int binarySearch(vector<int>& arr, int target) {\n    int low = 0;\n    int high = arr.size() - 1;\n    \n    while (low <= high) {\n        int mid = low + (high - low) / 2;\n        \n        if (arr[mid] == target) {\n            return mid;\n        } else if (arr[mid] < target) {\n            low = mid + 1;\n        } else {\n            high = mid - 1;\n        }\n    }\n    \n    return -1;  // Target not found\n}",
+    "c": "int binarySearch(int arr[], int size, int target) {\n    int low = 0;\n    int high = size - 1;\n    \n    while (low <= high) {\n        int mid = low + (high - low) / 2;\n        \n        if (arr[mid] == target) {\n            return mid;\n        } else if (arr[mid] < target) {\n            low = mid + 1;\n        } else {\n            high = mid - 1;\n        }\n    }\n    \n    return -1;  // Target not found\n}"
+  },
+  "metadata": {
+    "difficulty": "Beginner",
+    "last_updated": "2024-01-15",
+    "tags": ["searching", "divide-and-conquer", "logarithmic", "sorted-arrays"]
+  }
+}

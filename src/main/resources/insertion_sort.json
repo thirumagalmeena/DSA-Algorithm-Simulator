@@ -1,0 +1,47 @@
+{
+  "algorithm": {
+    "id": "insertion_sort",
+    "name": "Insertion Sort",
+    "category": "Sorting Algorithms",
+    "description": "A simple comparison-based sorting algorithm that builds the final sorted array one item at a time by repeatedly taking the next element and inserting it into its correct position within the sorted portion."
+  },
+  "sections": [
+    {
+      "id": "analogy",
+      "label": "Analogy",
+      "content": "Imagine you're sorting a hand of playing cards. You start with an empty left hand (sorted portion) and the cards face down on the table (unsorted portion). You pick up one card at a time from the table and insert it into the correct position in your left hand. For each new card, you scan through the cards already in your hand from right to left, shifting cards to the right as needed to make space, until you find the perfect spot to insert the new card. This is exactly how insertion sort works - it builds the sorted array one element at a time by inserting each new element into its proper place."
+    },
+    {
+      "id": "concept",
+      "label": "Concept",
+      "content": "Insertion Sort works similarly to how people naturally sort playing cards. It maintains a sorted subarray at the beginning of the list, and repeatedly takes the next element from the unsorted portion and inserts it into its correct position in the sorted portion.\n\n**Key Idea:** For each element, find its correct position in the already-sorted portion and insert it there, shifting other elements as necessary to make space."
+    },
+    {
+      "id": "process",
+      "label": "General Step-by-Step Process",
+      "content": "```mermaid\nflowchart TD\n    A[Start Insertion Sort] --> B[Initialize i = 1]\n    B --> C{i < n?}\n    C -->|No| Z[Array Sorted]\n    C -->|Yes| D[Set key = arr[i], j = i-1]\n    D --> E{j >= 0 AND arr[j] > key?}\n    E -->|Yes| F[Shift arr[j] to arr[j+1]]\n    F --> G[Decrement j: j = j-1]\n    G --> E\n    E -->|No| H[Insert key at arr[j+1]]\n    H --> I[Increment i: i = i+1]\n    I --> C\n```\n\n**Process Breakdown:**\n1. Start with the first element as sorted (single element is always sorted)\n2. Take the next element and store it as a 'key'\n3. Compare the key with elements in the sorted portion from right to left\n4. Shift all larger elements one position to the right\n5. Insert the key in its correct position\n6. Repeat until all elements are processed"
+    },
+    {
+      "id": "example",
+      "label": "Example Sorting",
+      "content": "**Initial Array:** `[12, 11, 13, 5, 6]`\n\n**Pass 1:** (i=1, key=11)\n- Compare 11 with 12: 11 < 12, shift 12 right\n- Insert 11 at position 0: `[11, 12, 13, 5, 6]`\n\n**Pass 2:** (i=2, key=13)\n- Compare 13 with 12: 13 > 12, no shift needed\n- Array remains: `[11, 12, 13, 5, 6]`\n\n**Pass 3:** (i=3, key=5)\n- Compare 5 with 13: 5 < 13, shift 13 right\n- Compare 5 with 12: 5 < 12, shift 12 right\n- Compare 5 with 11: 5 < 11, shift 11 right\n- Insert 5 at position 0: `[5, 11, 12, 13, 6]`\n\n**Pass 4:** (i=4, key=6)\n- Compare 6 with 13: 6 < 13, shift 13 right\n- Compare 6 with 12: 6 < 12, shift 12 right\n- Compare 6 with 11: 6 < 11, shift 11 right\n- Compare 6 with 5: 6 > 5, insert at position 1\n- Final array: `[5, 6, 11, 12, 13]`\n\n**Final Array:** `[5, 6, 11, 12, 13]`"
+    },
+    {
+      "id": "properties",
+      "label": "Algorithm Properties",
+      "content": "### Time Complexity:\n- **Best Case:** O(n) - when array is already sorted\n- **Worst Case:** O(n²) - when array is reverse sorted\n- **Average Case:** O(n²)\n\n### Space Complexity:\n- **O(1)** - Insertion sort is an in-place algorithm, requiring only constant additional space\n\n### Stability:\n- **Stable:** Yes - equal elements maintain their relative order\n\n### Adaptability:\n- **Adaptive:** Yes - becomes faster when dealing with partially sorted data\n\n### When to Use Insertion Sort:\n\n**✅ Suitable for:**\n- Small datasets (n < 50)\n- Nearly sorted or partially sorted data\n- Online sorting (when data comes in streams)\n- Educational purposes\n- As the base case for hybrid sorting algorithms like Timsort\n- Situations where simplicity and stability are important\n\n**❌ Not suitable for:**\n- Large unsorted datasets\n- Performance-critical applications with random data\n- Real-world production systems with large, unsorted data\n\n### Advantages:\n- Simple to understand and implement\n- Efficient for small data sets\n- Adaptive - efficient for data that is already substantially sorted\n- Stable - preserves relative order of equal elements\n- Online - can sort a list as it receives it\n- In-place - requires only O(1) additional memory\n- Low overhead\n\n### Disadvantages:\n- O(n²) time complexity for random data\n- Inefficient for large lists\n- Poor cache performance\n- Many shifting operations\n\n### Optimization Tips:\n1. **Binary Search Insertion** - use binary search to find insertion point (reduces comparisons but not shifts)\n2. **Shell Sort** - use as a generalization with gaps\n3. **Hybrid approaches** - use for small subarrays in quicksort/mergesort\n4. **Early termination** - stop inner loop early when possible\n\n### Real-world Usage:\n- Used in Timsort (Python, Java) for small runs\n- Often used internally by quicksort implementations for small subarrays\n- Practical for sorting small datasets or nearly sorted data"
+    }
+  ],
+  "code_examples": {
+    "python": "def insertion_sort(arr):\n    for i in range(1, len(arr)):\n        key = arr[i]\n        j = i - 1\n        while j >= 0 and arr[j] > key:\n            arr[j + 1] = arr[j]\n            j -= 1\n        arr[j + 1] = key\n    return arr",
+    "javascript": "function insertionSort(arr) {\n    for (let i = 1; i < arr.length; i++) {\n        let key = arr[i];\n        let j = i - 1;\n        while (j >= 0 && arr[j] > key) {\n            arr[j + 1] = arr[j];\n            j--;\n        }\n        arr[j + 1] = key;\n    }\n    return arr;\n}",
+    "java": "public static void insertionSort(int[] arr) {\n    for (int i = 1; i < arr.length; i++) {\n        int key = arr[i];\n        int j = i - 1;\n        while (j >= 0 && arr[j] > key) {\n            arr[j + 1] = arr[j];\n            j--;\n        }\n        arr[j + 1] = key;\n    }\n}",
+    "cpp": "void insertionSort(int arr[], int n) {\n    for (int i = 1; i < n; i++) {\n        int key = arr[i];\n        int j = i - 1;\n        while (j >= 0 && arr[j] > key) {\n            arr[j + 1] = arr[j];\n            j--;\n        }\n        arr[j + 1] = key;\n    }\n}",
+    "c": "void insertionSort(int arr[], int n) {\n    for (int i = 1; i < n; i++) {\n        int key = arr[i];\n        int j = i - 1;\n        while (j >= 0 && arr[j] > key) {\n            arr[j + 1] = arr[j];\n            j--;\n        }\n        arr[j + 1] = key;\n    }\n}"
+  },
+  "metadata": {
+    "difficulty": "Beginner",
+    "last_updated": "2024-01-15",
+    "tags": ["sorting", "comparison-based", "stable", "in-place", "adaptive"]
+  }
+}

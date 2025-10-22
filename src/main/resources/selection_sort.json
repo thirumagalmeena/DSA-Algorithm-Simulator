@@ -1,0 +1,47 @@
+{
+  "algorithm": {
+    "id": "selection_sort",
+    "name": "Selection Sort",
+    "category": "Sorting Algorithms",
+    "description": "A simple comparison-based sorting algorithm that divides the input into a sorted and unsorted region, and repeatedly selects the smallest element from the unsorted region and moves it to the sorted region."
+  },
+  "sections": [
+    {
+      "id": "analogy",
+      "label": "Analogy",
+      "content": "Imagine you're organizing a hand of playing cards. You look through all the cards to find the smallest one and place it at the leftmost position. Then you look through the remaining cards to find the next smallest one and place it second from the left. You continue this process, each time scanning through the remaining unsorted cards to find the smallest one and moving it to the end of the sorted section. It's like repeatedly picking the 'best' (smallest) candidate from the remaining options until everything is in order."
+    },
+    {
+      "id": "concept",
+      "label": "Concept",
+      "content": "Selection Sort works by maintaining two subarrays in a given array:\n1. The subarray which is already sorted\n2. The remaining subarray which is unsorted\n\nIn every iteration, the minimum element from the unsorted subarray is selected and swapped with the leftmost element of the unsorted subarray, moving the boundary between sorted and unsorted subarrays one element to the right.\n\n**Key Idea:** Repeatedly find the minimum element and put it at the beginning of the unsorted portion."
+    },
+    {
+      "id": "process",
+      "label": "General Step-by-Step Process",
+      "content": "```mermaid\nflowchart TD\n    A[Start Selection Sort] --> B[Initialize i = 0]\n    B --> C{i < n-1?}\n    C -->|No| Z[Array Sorted]\n    C -->|Yes| D[Set min_index = i]\n    D --> E[Initialize j = i+1]\n    E --> F{j < n?}\n    F -->|No| H[Swap arr[i] and arr[min_index]]\n    F -->|Yes| G{arr[j] < arr[min_index]?}\n    G -->|Yes| I[Set min_index = j]\n    G -->|No| J[Increment j]\n    I --> J\n    J --> F\n    H --> K[Increment i]\n    K --> C\n```\n\n**Process Breakdown:**\n1. Start with the entire array as unsorted\n2. Find the minimum element in the unsorted array\n3. Swap it with the first element of the unsorted array\n4. Move the boundary between sorted and unsorted one element to the right\n5. Repeat until the entire array is sorted"
+    },
+    {
+      "id": "example",
+      "label": "Example Sorting",
+      "content": "**Initial Array:** `[64, 25, 12, 22, 11]`\n\n**Pass 1:**\n- Find minimum in entire array: 11 at index 4\n- Swap with first element: `[11, 25, 12, 22, 64]`\n- Sorted portion: [11], Unsorted: [25, 12, 22, 64]\n\n**Pass 2:**\n- Find minimum in unsorted: 12 at index 2\n- Swap with first unsorted element: `[11, 12, 25, 22, 64]`\n- Sorted portion: [11, 12], Unsorted: [25, 22, 64]\n\n**Pass 3:**\n- Find minimum in unsorted: 22 at index 3\n- Swap with first unsorted element: `[11, 12, 22, 25, 64]`\n- Sorted portion: [11, 12, 22], Unsorted: [25, 64]\n\n**Pass 4:**\n- Find minimum in unsorted: 25 at index 3\n- No swap needed (already in position)\n- Sorted portion: [11, 12, 22, 25], Unsorted: [64]\n\n**Final Array:** `[11, 12, 22, 25, 64]`\n\n**Total comparisons:** 10, **Total swaps:** 3"
+    },
+    {
+      "id": "properties",
+      "label": "Algorithm Properties",
+      "content": "### Time Complexity:\n- **Best Case:** O(n²) - still makes all comparisons\n- **Worst Case:** O(n²) - when array is reverse sorted\n- **Average Case:** O(n²)\n\n### Space Complexity:\n- **O(1)** - Selection sort is an in-place algorithm, requiring only constant additional space\n\n### Stability:\n- **Not Stable:** By default, selection sort is not stable because swapping may change the relative order of equal elements\n\n### Number of Swaps:\n- **O(n)** - Makes only O(n) swaps in worst case, which can be advantageous when memory write is a costly operation\n\n### When to Use Selection Sort:\n\n**✅ Suitable for:**\n- Small datasets\n- Situations where memory write is expensive (minimal swaps)\n- Educational purposes to understand sorting concepts\n- When auxiliary memory is limited\n\n**❌ Not suitable for:**\n- Large datasets\n- Performance-critical applications\n- Situations requiring stable sorting\n- Real-world production systems with large data\n\n### Advantages:\n- Simple to understand and implement\n- Performs well on small lists\n- Makes minimum number of swaps (O(n) swaps)\n- In-place sorting (no extra memory needed)\n- Good for situations where swap operations are costly\n\n### Disadvantages:\n- O(n²) time complexity makes it inefficient for large lists\n- Not adaptive (doesn't benefit from partially sorted data)\n- Not stable by default\n- Poor cache performance\n- Always performs O(n²) comparisons regardless of input\n\n### Optimization Tips:\n1. **Simultaneous min and max selection** - find both minimum and maximum in each pass\n2. **Use for small arrays** as part of a hybrid algorithm\n3. **Consider stability** - can be made stable with additional O(n) space\n4. **Early termination** - though limited benefit due to O(n²) nature"
+    }
+  ],
+  "code_examples": {
+    "python": "def selection_sort(arr):\n    n = len(arr)\n    for i in range(n):\n        min_index = i\n        for j in range(i+1, n):\n            if arr[j] < arr[min_index]:\n                min_index = j\n        arr[i], arr[min_index] = arr[min_index], arr[i]\n    return arr",
+    "javascript": "function selectionSort(arr) {\n    const n = arr.length;\n    for (let i = 0; i < n-1; i++) {\n        let minIndex = i;\n        for (let j = i+1; j < n; j++) {\n            if (arr[j] < arr[minIndex]) {\n                minIndex = j;\n            }\n        }\n        if (minIndex !== i) {\n            [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];\n        }\n    }\n    return arr;\n}",
+    "java": "public static void selectionSort(int[] arr) {\n    int n = arr.length;\n    for (int i = 0; i < n-1; i++) {\n        int minIndex = i;\n        for (int j = i+1; j < n; j++) {\n            if (arr[j] < arr[minIndex]) {\n                minIndex = j;\n            }\n        }\n        if (minIndex != i) {\n            int temp = arr[i];\n            arr[i] = arr[minIndex];\n            arr[minIndex] = temp;\n        }\n    }\n}",
+    "cpp": "void selectionSort(int arr[], int n) {\n    for (int i = 0; i < n-1; i++) {\n        int minIndex = i;\n        for (int j = i+1; j < n; j++) {\n            if (arr[j] < arr[minIndex]) {\n                minIndex = j;\n            }\n        }\n        if (minIndex != i) {\n            int temp = arr[i];\n            arr[i] = arr[minIndex];\n            arr[minIndex] = temp;\n        }\n    }\n}",
+    "c": "void selectionSort(int arr[], int n) {\n    for (int i = 0; i < n-1; i++) {\n        int minIndex = i;\n        for (int j = i+1; j < n; j++) {\n            if (arr[j] < arr[minIndex]) {\n                minIndex = j;\n            }\n        }\n        if (minIndex != i) {\n            int temp = arr[i];\n            arr[i] = arr[minIndex];\n            arr[minIndex] = temp;\n        }\n    }\n}"
+  },
+  "metadata": {
+    "difficulty": "Beginner",
+    "last_updated": "2024-01-15",
+    "tags": ["sorting", "comparison-based", "in-place", "unstable"]
+  }
+}

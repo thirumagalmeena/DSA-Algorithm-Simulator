@@ -1,0 +1,47 @@
+{
+  "algorithm": {
+    "id": "bubble_sort",
+    "name": "Bubble Sort",
+    "category": "Sorting Algorithms",
+    "description": "A simple comparison-based sorting algorithm that repeatedly steps through the list and swaps adjacent elements if they are in the wrong order."
+  },
+  "sections": [
+    {
+      "id": "analogy",
+      "label": " Analogy",
+      "content": "Imagine you're organizing a line of people by height from shortest to tallest. You start at the beginning of the line and compare each pair of adjacent people. If the taller person is in front of the shorter one, you swap them. You keep doing this, walking through the line multiple times until you can make a complete pass without needing to swap anyone. Each full pass through the line \"bubbles up\" the tallest remaining person to their correct position at the end, much like air bubbles rising to the surface in water."
+    },
+    {
+      "id": "concept",
+      "label": "Concept",
+      "content": "Bubble Sort is a simple comparison-based sorting algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order. The pass through the list is repeated until no swaps are needed, which indicates that the list is sorted.\n\nKey Idea: With each complete iteration, the largest unsorted element \"bubbles up\" to its correct position at the end of the list."
+    },
+    {
+      "id": "process",
+      "label": " General Step-by-Step Process",
+      "content": "```mermaid\nflowchart TD\n    A[Start Bubble Sort] --> B[Initialize i = 0]\n    B --> C[i < n-1?]\n    C -->|No| Z[Array Sorted]\n    C -->|Yes| D[Initialize j = 0, swapped = false]\n    D --> E[j < n-i-1?]\n    E -->|No| H[Increment i]\n    E -->|Yes| F[Compare arr[j] and arr[j+1]]\n    F --> G{arr[j] > arr[j+1]?}\n    G -->|Yes| I[Swap elements<br>Set swapped = true]\n    G -->|No| J[Increment j]\n    I --> J\n    J --> E\n    H --> K{swapped = true?}\n    K -->|No| Z\n    K -->|Yes| C\n```\n\n**Process Breakdown:**\n1. Start with the first element\n2. Compare it with the next element\n3. If they're in wrong order, swap them\n4. Move to the next pair and repeat\n5. After each pass, the largest element is in its correct position\n6. Repeat for remaining elements until no swaps are needed"
+    },
+    {
+      "id": "example",
+      "label": " Example Sorting",
+      "content": "**Initial Array:** `[5, 2, 8, 1, 9]`\n\n**Pass 1:**\n- Compare 5 and 2: `[2, 5, 8, 1, 9]` (swapped)\n- Compare 5 and 8: `[2, 5, 8, 1, 9]` (no swap)\n- Compare 8 and 1: `[2, 5, 1, 8, 9]` (swapped)\n- Compare 8 and 9: `[2, 5, 1, 8, 9]` (no swap)\n\n**Pass 2:**\n- Compare 2 and 5: `[2, 5, 1, 8, 9]` (no swap)\n- Compare 5 and 1: `[2, 1, 5, 8, 9]` (swapped)\n- Compare 5 and 8: `[2, 1, 5, 8, 9]` (no swap)\n\n**Pass 3:**\n- Compare 2 and 1: `[1, 2, 5, 8, 9]` (swapped)\n- Compare 2 and 5: `[1, 2, 5, 8, 9]` (no swap)\n\n**Pass 4:** No swaps needed - array is sorted!\n\n**Final Array:** `[1, 2, 5, 8, 9]`"
+    },
+    {
+      "id": "properties",
+      "label": " Algorithm Properties",
+      "content": "### Time Complexity:\n- **Best Case:** O(n) - when array is already sorted (with optimization)\n- **Worst Case:** O(n²) - when array is reverse sorted\n- **Average Case:** O(n²)\n\n### Space Complexity:\n- **O(1)** - Bubble sort is an in-place algorithm, requiring only constant additional space\n\n### Stability:\n- **Stable:** Yes - equal elements maintain their relative order\n\n### Adaptability:\n- **Adaptive:** Yes (with optimization) - becomes faster when dealing with partially sorted data\n\n### When to Use Bubble Sort:\n\n** Suitable for:**\n- Educational purposes (easy to understand)\n- Small datasets (n < 100)\n- Nearly sorted data (with optimization)\n- Situations where code simplicity is more important than performance\n\n** Not suitable for:**\n- Large datasets\n- Performance-critical applications\n- Real-world production systems\n\n### Optimization Tips:\n1. **Early Termination:** Stop if no swaps occur in a pass\n2. **Reduced Range:** Decrease the comparison range after each pass\n3. **Cocktail Shaker Sort:** Bidirectional bubbling for better performance\n\nBubble Sort serves as an excellent introduction to sorting algorithms due to its simplicity, but in practice, more efficient algorithms like Quick Sort or Merge Sort are preferred for larger datasets."
+    }
+  ],
+  "code_examples": {
+    "python": "def bubble_sort(arr):\n    n = len(arr)\n    for i in range(n):\n        swapped = False\n        for j in range(0, n-i-1):\n            if arr[j] > arr[j+1]:\n                arr[j], arr[j+1] = arr[j+1], arr[j]\n                swapped = True\n        if not swapped:\n            break\n    return arr",
+    "javascript": "function bubbleSort(arr) {\n    let n = arr.length;\n    for (let i = 0; i < n-1; i++) {\n        let swapped = false;\n        for (let j = 0; j < n-i-1; j++) {\n            if (arr[j] > arr[j+1]) {\n                [arr[j], arr[j+1]] = [arr[j+1], arr[j]];\n                swapped = true;\n            }\n        }\n        if (!swapped) break;\n    }\n    return arr;\n}",
+    "java": "public static void bubbleSort(int[] arr) {\n    int n = arr.length;\n    boolean swapped;\n    for (int i = 0; i < n-1; i++) {\n        swapped = false;\n        for (int j = 0; j < n-i-1; j++) {\n            if (arr[j] > arr[j+1]) {\n                int temp = arr[j];\n                arr[j] = arr[j+1];\n                arr[j+1] = temp;\n                swapped = true;\n            }\n        }\n        if (!swapped) break;\n    }\n}",
+    "cpp": "void bubbleSort(int arr[], int n) {\n    bool swapped;\n    for (int i = 0; i < n-1; i++) {\n        swapped = false;\n        for (int j = 0; j < n-i-1; j++) {\n            if (arr[j] > arr[j+1]) {\n                int temp = arr[j];\n                arr[j] = arr[j+1];\n                arr[j+1] = temp;\n                swapped = true;\n            }\n        }\n        if (!swapped) break;\n    }\n}",
+    "c": "void bubbleSort(int arr[], int n) {\n    int swapped;\n    for (int i = 0; i < n-1; i++) {\n        swapped = 0;\n        for (int j = 0; j < n-i-1; j++) {\n            if (arr[j] > arr[j+1]) {\n                int temp = arr[j];\n                arr[j] = arr[j+1];\n                arr[j+1] = temp;\n                swapped = 1;\n            }\n        }\n        if (!swapped) break;\n    }\n}"
+  },
+  "metadata": {
+    "difficulty": "Beginner",
+    "last_updated": "2024-01-15",
+    "tags": ["sorting", "comparison-based", "stable", "in-place"]
+  }
+}
