@@ -20,6 +20,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import io.github.cdimascio.dotenv.Dotenv;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,16 @@ public class ViewAlgorithmsPage {
 
     private final Stage stage;
     private MongoCollection<Document> collection;
+    private static Dotenv dotenv;
+
+    static {
+        // Initialize dotenv
+        dotenv = Dotenv.configure()
+                .directory(System.getProperty("user.dir"))
+                .ignoreIfMalformed()
+                .ignoreIfMissing()
+                .load();
+    }
 
     public ViewAlgorithmsPage(Stage stage) {
         this.stage = stage;
@@ -36,12 +47,34 @@ public class ViewAlgorithmsPage {
 
     private void initializeDatabase() {
         try {
-            // Use your existing MongoDB connection
-            MongoClient mongoClient = MongoClients.create("mongodb+srv://23pd03_db_user:ldn2saUWgoBBINVw@cluster0.gwvt6zu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
-            MongoDatabase database = mongoClient.getDatabase("algodb");
+            // Get credentials from environment variables
+            String uri = dotenv.get("MONGODB_URI");
+            String databaseName = dotenv.get("DATABASE_NAME");
+
+            // Validate environment variables
+            if (uri == null || uri.isEmpty()) {
+                throw new IllegalStateException("MONGODB_URI not found in environment variables");
+            }
+            if (databaseName == null || databaseName.isEmpty()) {
+                throw new IllegalStateException("DATABASE_NAME not found in environment variables");
+            }
+
+            // Use environment variables for MongoDB connection
+            MongoClient mongoClient = MongoClients.create(uri);
+            MongoDatabase database = mongoClient.getDatabase(databaseName);
             collection = database.getCollection("algorithms");
+            
+            System.out.println("✅ Connected to MongoDB using environment variables");
         } catch (Exception e) {
             System.err.println("Failed to connect to MongoDB: " + e.getMessage());
+            e.printStackTrace();
+            
+            // Show error message to user
+            javafx.application.Platform.runLater(() -> {
+                showErrorAlert("Database Connection Error", 
+                    "Failed to connect to database. Please check your environment variables.\n\n" +
+                    "Error: " + e.getMessage());
+            });
         }
     }
 
@@ -68,6 +101,18 @@ public class ViewAlgorithmsPage {
         ProgressIndicator progressIndicator = new ProgressIndicator();
         progressIndicator.setVisible(true);
 
+        // Connection status label
+        Label connectionStatus = new Label();
+        connectionStatus.setFont(Font.font("System", FontWeight.NORMAL, 12));
+        
+        if (collection == null) {
+            connectionStatus.setText("⚠️ Not connected to database");
+            connectionStatus.setStyle("-fx-text-fill: #ff6b6b;");
+        } else {
+            connectionStatus.setText("✅ Connected to database");
+            connectionStatus.setStyle("-fx-text-fill: #51cf66;");
+        }
+
         // ListView for algorithms
         ListView<AlgorithmData> listView = new ListView<>();
         listView.setPrefHeight(400);
@@ -84,6 +129,18 @@ public class ViewAlgorithmsPage {
             javafx.application.Platform.runLater(() -> {
                 algorithms.setAll(algoList);
                 progressIndicator.setVisible(false);
+                
+                // Update connection status based on results
+                if (collection == null) {
+                    connectionStatus.setText("❌ Database connection failed");
+                    connectionStatus.setStyle("-fx-text-fill: #ff6b6b;");
+                } else if (algoList.isEmpty()) {
+                    connectionStatus.setText("ℹ️ Connected but no algorithms found");
+                    connectionStatus.setStyle("-fx-text-fill: #ffd43b;");
+                } else {
+                    connectionStatus.setText("✅ Connected to database - " + algoList.size() + " algorithms loaded");
+                    connectionStatus.setStyle("-fx-text-fill: #51cf66;");
+                }
             });
         });
         
@@ -196,7 +253,7 @@ public class ViewAlgorithmsPage {
             countLabel.setText("Found " + algorithms.size() + " algorithms");
         });
 
-        VBox contentBox = new VBox(15, headerBox, countLabel, progressIndicator, listView, backBtn);
+        VBox contentBox = new VBox(15, headerBox, connectionStatus, countLabel, progressIndicator, listView, backBtn);
         contentBox.setAlignment(Pos.CENTER);
         contentBox.setMaxWidth(700);
 
@@ -211,36 +268,44 @@ public class ViewAlgorithmsPage {
         List<AlgorithmData> algorithms = new ArrayList<>();
         
         if (collection == null) {
+            System.err.println("❌ MongoDB collection is null - cannot load algorithms");
             return algorithms;
         }
 
-        FindIterable<Document> algoDocuments = collection.find();
-        
-        for (Document doc : algoDocuments) {
-            Document algorithmDoc = doc.get("algorithm", Document.class);
-            Document metadata = doc.get("metadata", Document.class);
+        try {
+            FindIterable<Document> algoDocuments = collection.find();
             
-            String id = algorithmDoc.getString("id");
-            String name = algorithmDoc.getString("name");
-            String category = algorithmDoc.getString("category");
-            String description = algorithmDoc.getString("description");
-            
-            String difficulty = "Unknown";
-            List<String> tags = new ArrayList<>();
-            
-            if (metadata != null) {
-                difficulty = metadata.getString("difficulty");
-                if (difficulty == null) difficulty = "Unknown";
+            for (Document doc : algoDocuments) {
+                Document algorithmDoc = doc.get("algorithm", Document.class);
+                Document metadata = doc.get("metadata", Document.class);
                 
-                List<?> tagsList = metadata.get("tags", List.class);
-                if (tagsList != null) {
-                    for (Object tag : tagsList) {
-                        tags.add(tag.toString());
+                String id = algorithmDoc.getString("id");
+                String name = algorithmDoc.getString("name");
+                String category = algorithmDoc.getString("category");
+                String description = algorithmDoc.getString("description");
+                
+                String difficulty = "Unknown";
+                List<String> tags = new ArrayList<>();
+                
+                if (metadata != null) {
+                    difficulty = metadata.getString("difficulty");
+                    if (difficulty == null) difficulty = "Unknown";
+                    
+                    List<?> tagsList = metadata.get("tags", List.class);
+                    if (tagsList != null) {
+                        for (Object tag : tagsList) {
+                            tags.add(tag.toString());
+                        }
                     }
                 }
+                
+                algorithms.add(new AlgorithmData(id, name, category, description, difficulty, tags));
             }
             
-            algorithms.add(new AlgorithmData(id, name, category, description, difficulty, tags));
+            System.out.println("✅ Loaded " + algorithms.size() + " algorithms from MongoDB");
+        } catch (Exception e) {
+            System.err.println("❌ Error loading algorithms from MongoDB: " + e.getMessage());
+            e.printStackTrace();
         }
         
         return algorithms;
@@ -250,6 +315,14 @@ public class ViewAlgorithmsPage {
         // Open detailed algorithm view
         AlgorithmDetailPage detailPage = new AlgorithmDetailPage(stage, algorithm, collection);
         detailPage.show();
+    }
+
+    private void showErrorAlert(String title, String message) {
+        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     private String getDifficultyColor(String difficulty) {
