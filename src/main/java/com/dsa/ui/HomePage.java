@@ -33,7 +33,7 @@ public class HomePage extends Application {
 
         // Create feature buttons
         Button viewAlgorithmsBtn = createStyledButton("View Algorithms", "#4CAF50");
-        Button visualizeAlgoBtn = createStyledButton("Visualize Algorithm", "#2196F3");
+        Button visualizeAlgoBtn = createStyledButton("Algorithm Visualizations", "#2196F3");
         Button practiceBtn = createStyledButton("Practice Problems", "#FF9800");
         Button exitBtn = createStyledButton("Exit", "#f44336");
 
@@ -43,7 +43,11 @@ public class HomePage extends Application {
             viewPage.show();
         });
         
-        visualizeAlgoBtn.setOnAction(e -> System.out.println("Visualize Algorithm clicked"));
+        visualizeAlgoBtn.setOnAction(e -> {
+            ViewVisualizationPage vizPage = new ViewVisualizationPage(stage);
+            vizPage.show();
+        });
+        
         practiceBtn.setOnAction(e -> System.out.println("Practice Problems clicked"));
         exitBtn.setOnAction(e -> stage.close());
 
@@ -115,7 +119,9 @@ public class HomePage extends Application {
             "• Browse comprehensive algorithm explanations",
             "• Interactive algorithm visualizations", 
             "• Practice with curated problem sets",
-            "• Step-by-step learning path"
+            "• Step-by-step learning path",
+            "• Real-time algorithm execution",
+            "• Multiple visualization types"
         };
         
         for (String feature : features) {

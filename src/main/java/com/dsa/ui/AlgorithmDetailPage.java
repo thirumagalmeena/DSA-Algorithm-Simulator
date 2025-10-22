@@ -62,8 +62,9 @@ public class AlgorithmDetailPage {
             Tab learningTab = createLearningTab(fullAlgorithm);
             Tab codeTab = createCodeTab(fullAlgorithm);
             Tab propertiesTab = createPropertiesTab(fullAlgorithm);
+            Tab visualizationTab = createVisualizationTab(fullAlgorithm); // New visualization tab
 
-            tabPane.getTabs().addAll(overviewTab, learningTab, codeTab, propertiesTab);
+            tabPane.getTabs().addAll(overviewTab, learningTab, codeTab, propertiesTab, visualizationTab);
         } else {
             Tab errorTab = createErrorTab();
             tabPane.getTabs().add(errorTab);
@@ -247,6 +248,98 @@ public class AlgorithmDetailPage {
         return tab;
     }
 
+    private Tab createVisualizationTab(Document fullAlgorithm) {
+        Tab tab = new Tab("🎮 Visualization");
+        tab.setStyle("-fx-font-weight: bold; -fx-font-size: 14;");
+
+        ScrollPane scrollPane = createStyledScrollPane();
+        VBox content = createContentBox();
+
+        // Check if visualization is available
+        boolean hasVisualization = checkVisualizationAvailability(fullAlgorithm);
+        
+        if (hasVisualization) {
+            VBox vizSection = createSectionBox("Interactive Visualization");
+            
+            Label title = new Label("Run " + algorithm.getName() + " Visualization");
+            title.setFont(Font.font("System", FontWeight.BOLD, 20));
+            title.setStyle("-fx-text-fill: #2c3e50;");
+            
+            Label description = new Label("Experience an interactive simulation to see how " + 
+                algorithm.getName() + " works step by step with real-time animation and visual feedback.");
+            description.setFont(Font.font("System", 14));
+            description.setStyle("-fx-text-fill: #7f8c8d;");
+            description.setWrapText(true);
+            description.setMaxWidth(700);
+
+            // Features list
+            VBox featuresBox = new VBox(10);
+            featuresBox.setPadding(new Insets(15, 0, 15, 0));
+            
+            String[] features = {
+                "• Real-time algorithm execution",
+                "• Step-by-step animation",
+                "• Interactive controls (play, pause, reset)",
+                "• Visual comparison and swap highlighting",
+                "• Performance metrics tracking",
+                "• Custom input values"
+            };
+            
+            for (String feature : features) {
+                Label featureLabel = new Label(feature);
+                featureLabel.setFont(Font.font("System", 13));
+                featureLabel.setStyle("-fx-text-fill: #495057;");
+                featuresBox.getChildren().add(featureLabel);
+            }
+
+            Button runVizButton = createVisualizationButton();
+            
+            VBox centerBox = new VBox(20, title, description, featuresBox, runVizButton);
+            centerBox.setAlignment(Pos.CENTER);
+            centerBox.setPadding(new Insets(20));
+            
+            vizSection.getChildren().add(centerBox);
+            content.getChildren().add(vizSection);
+        } else {
+            VBox noVizSection = createSectionBox("Visualization");
+            
+            Label noVizLabel = new Label("Visualization not available for " + algorithm.getName());
+            noVizLabel.setFont(Font.font("System", FontWeight.BOLD, 18));
+            noVizLabel.setStyle("-fx-text-fill: #e74c3c;");
+            
+            Label suggestionLabel = new Label("Check back later or explore other algorithms with available visualizations.");
+            suggestionLabel.setFont(Font.font("System", 14));
+            suggestionLabel.setStyle("-fx-text-fill: #7f8c8d;");
+            suggestionLabel.setWrapText(true);
+            suggestionLabel.setMaxWidth(500);
+            
+            Button browseVizButton = new Button("Browse Available Visualizations");
+            browseVizButton.setPrefWidth(250);
+            browseVizButton.setPrefHeight(40);
+            browseVizButton.setFont(Font.font("System", FontWeight.BOLD, 14));
+            browseVizButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
+            browseVizButton.setOnMouseEntered(e -> browseVizButton.setStyle("-fx-background-color: #2980b9; -fx-text-fill: white;"));
+            browseVizButton.setOnMouseExited(e -> browseVizButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;"));
+            
+            browseVizButton.setOnAction(e -> {
+                ViewVisualizationPage vizPage = new ViewVisualizationPage(stage);
+                vizPage.show();
+            });
+            
+            VBox centerBox = new VBox(20, noVizLabel, suggestionLabel, browseVizButton);
+            centerBox.setAlignment(Pos.CENTER);
+            centerBox.setPadding(new Insets(30));
+            
+            noVizSection.getChildren().add(centerBox);
+            content.getChildren().add(noVizSection);
+        }
+
+        scrollPane.setContent(content);
+        tab.setContent(scrollPane);
+
+        return tab;
+    }
+
     private Tab createErrorTab() {
         Tab tab = new Tab("❌ Error");
         tab.setStyle("-fx-font-weight: bold;");
@@ -266,6 +359,141 @@ public class AlgorithmDetailPage {
         tab.setContent(errorBox);
 
         return tab;
+    }
+
+    // Visualization-related methods
+    private boolean checkVisualizationAvailability(Document fullAlgorithm) {
+        Document visualization = fullAlgorithm.get("visualization", Document.class);
+        if (visualization != null && visualization.getBoolean("available", false)) {
+            return true;
+        }
+        
+        // Fallback: Check if visualization class exists
+        return getVisualizationClassName() != null;
+    }
+
+    private Button createVisualizationButton() {
+        Button runVizButton = new Button("🚀 Launch Visualization");
+        runVizButton.setPrefWidth(250);
+        runVizButton.setPrefHeight(50);
+        runVizButton.setFont(Font.font("System", FontWeight.BOLD, 16));
+        
+        String normalStyle = "-fx-background-color: linear-gradient(to right, #27ae60, #2ecc71); " +
+                           "-fx-text-fill: white; -fx-background-radius: 10; " +
+                           "-fx-border-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0.5, 3, 3);";
+        
+        String hoverStyle = "-fx-background-color: linear-gradient(to right, #229954, #27ae60); " +
+                          "-fx-text-fill: white; -fx-background-radius: 10; " +
+                          "-fx-border-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 12, 0.6, 4, 4);";
+        
+        runVizButton.setStyle(normalStyle);
+        runVizButton.setOnMouseEntered(e -> runVizButton.setStyle(hoverStyle));
+        runVizButton.setOnMouseExited(e -> runVizButton.setStyle(normalStyle));
+        
+        runVizButton.setOnAction(e -> launchAlgorithmVisualization());
+        
+        return runVizButton;
+    }
+
+    private void launchAlgorithmVisualization() {
+        try {
+            String className = getVisualizationClassName();
+            if (className != null) {
+                Class<?> vizClass = Class.forName(className);
+                javafx.application.Application vizApp = (javafx.application.Application) vizClass.getDeclaredConstructor().newInstance();
+                
+                Stage vizStage = new Stage();
+                vizStage.setTitle(algorithm.getName() + " - DSA Visualizer");
+                vizApp.start(vizStage);
+            } else {
+                showVisualizationError("No visualization class found for " + algorithm.getName());
+            }
+        } catch (Exception e) {
+            System.err.println("❌ Failed to launch visualization: " + e.getMessage());
+            e.printStackTrace();
+            showVisualizationError("Failed to launch visualization: " + e.getMessage());
+        }
+    }
+
+    private String getVisualizationClassName() {
+        System.out.println("🔍 Looking for visualization for: " + algorithm.getName() + " (ID: " + algorithm.getId() + ")");
+        
+        String algorithmName = algorithm.getName().toLowerCase();
+        String algorithmId = algorithm.getId().toLowerCase();
+        
+        // ==================== SORTING ALGORITHMS ====================
+        if (algorithmName.contains("bubble") || algorithmId.contains("bubble")) {
+            return checkAndReturnClass("com.dsa.simulator.sorting.BubbleSortVisualizer");
+        } else if (algorithmName.contains("quick") || algorithmId.contains("quick")) {
+            return checkAndReturnClass("com.dsa.simulator.sorting.QuickSortVisualizer");
+        } else if (algorithmName.contains("merge") || algorithmId.contains("merge")) {
+            return checkAndReturnClass("com.dsa.simulator.sorting.MergeSortVisualizer");
+        } else if (algorithmName.contains("insertion") || algorithmId.contains("insertion")) {
+            return checkAndReturnClass("com.dsa.simulator.sorting.InsertionSortVisualizer");
+        } else if (algorithmName.contains("selection") || algorithmId.contains("selection")) {
+            return checkAndReturnClass("com.dsa.simulator.sorting.SelectionSortVisualizer");
+        }
+        
+        // ==================== SEARCHING ALGORITHMS ====================
+        else if (algorithmName.contains("binary") || algorithmId.contains("binary")) {
+            return checkAndReturnClass("com.dsa.simulator.searching.BinarySearchVisualizer");
+        } else if (algorithmName.contains("linear") || algorithmId.contains("linear")) {
+            return checkAndReturnClass("com.dsa.simulator.searching.LinearSearchVisualizer");
+        }
+        
+        // ==================== GRAPH ALGORITHMS ====================
+        else if (algorithmName.contains("dijkstra") || algorithmId.contains("dijkstra")) {
+            return checkAndReturnClass("com.dsa.simulator.graphTraversal.DijkstraVisualizer");
+        } else if (algorithmName.contains("topological") || algorithmId.contains("topological")) {
+            return checkAndReturnClass("com.dsa.simulator.graphTraversal.TopologicalOrderingVisualizer");
+        }
+        
+        // ==================== GREEDY ALGORITHMS ====================
+        else if (algorithmName.contains("job") && algorithmName.contains("scheduling") || 
+                 algorithmId.contains("job") && algorithmId.contains("scheduling")) {
+            return checkAndReturnClass("com.dsa.simulator.greedy.JobSchedulingVisualizer");
+        } else if (algorithmName.contains("kruskal") || algorithmId.contains("kruskal")) {
+            return checkAndReturnClass("com.dsa.simulator.greedy.KruskalVisualizer");
+        } else if (algorithmName.contains("prim") || algorithmId.contains("prim")) {
+            return checkAndReturnClass("com.dsa.simulator.greedy.PrimsVisualizer");
+        }
+        
+        // ==================== DYNAMIC PROGRAMMING ====================
+        else if ((algorithmName.contains("coin") && algorithmName.contains("change")) || 
+                 (algorithmId.contains("coin") && algorithmId.contains("change"))) {
+            return checkAndReturnClass("com.dsa.simulator.dynamicProgramming.CoinChangeVisualizer");
+        } else if (algorithmName.contains("fibonacci") || algorithmId.contains("fibonacci")) {
+            return checkAndReturnClass("com.dsa.simulator.dynamicProgramming.FibonacciVisualizer");
+        } else if (algorithmName.contains("knapsack") || algorithmId.contains("knapsack")) {
+            return checkAndReturnClass("com.dsa.simulator.dynamicProgramming.Knapsack01Visualizer");
+        } else if ((algorithmName.contains("longest") && algorithmName.contains("common") && algorithmName.contains("subsequence")) || 
+                   (algorithmId.contains("lcs"))) {
+            return checkAndReturnClass("com.dsa.simulator.dynamicProgramming.LongestCommonSubsequenceVisualizer");
+        } else if (algorithmName.contains("pascal") || algorithmId.contains("pascal")) {
+            return checkAndReturnClass("com.dsa.simulator.dynamicProgramming.PascalTriangleVisualizer");
+        }
+        
+        System.out.println("   → No visualization mapping found for: " + algorithm.getName());
+        return null;
+    }
+
+    private String checkAndReturnClass(String className) {
+        try {
+            Class.forName(className);
+            System.out.println("✅ Found visualization class: " + className);
+            return className;
+        } catch (ClassNotFoundException e) {
+            System.out.println("❌ Visualization class not found: " + className);
+            return null;
+        }
+    }
+
+    private void showVisualizationError(String message) {
+        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+        alert.setTitle("Visualization Error");
+        alert.setHeaderText("Failed to launch visualization");
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     // UI Component Factory Methods
