@@ -1,0 +1,157 @@
+{
+  "category": "Dynamic Programming",
+  "algorithms": [
+    {
+      "name": "0/1 Knapsack",
+      "timeComplexity": {
+        "best": "O(nW)",
+        "average": "O(nW)",
+        "worst": "O(nW)"
+      },
+      "spaceComplexity": "O(nW)",
+      "description": "Selects items with given weights and values to maximize total value without exceeding weight capacity.",
+      "keyPoints": [
+        "Pseudo-polynomial time complexity",
+        "Classic DP problem",
+        "Can be space-optimized to O(W)",
+        "Items cannot be divided"
+      ],
+      "whenToUse": [
+        "Resource allocation problems",
+        "Budget optimization",
+        "Any selection problem with constraints"
+      ],
+      "realWorldExample": "Investment portfolio optimization, resource allocation in projects",
+      "runtimeData": {
+        "10": 0.001,
+        "50": 0.01,
+        "100": 0.05,
+        "500": 1.2,
+        "1000": 5.0,
+        "5000": 125.0
+      }
+    },
+    {
+      "name": "Fibonacci Sequence",
+      "timeComplexity": {
+        "best": "O(n)",
+        "average": "O(n)",
+        "worst": "O(n)"
+      },
+      "spaceComplexity": "O(n)",
+      "description": "Computes Fibonacci numbers using memoization to avoid redundant calculations.",
+      "keyPoints": [
+        "Classic example of memoization",
+        "Exponential without DP, linear with DP",
+        "Can be optimized to O(1) space",
+        "Demonstrates overlapping subproblems"
+      ],
+      "whenToUse": [
+        "Teaching DP concepts",
+        "Any problem with overlapping subproblems",
+        "Sequence generation problems"
+      ],
+      "realWorldExample": "Population growth modeling, financial modeling",
+      "runtimeData": {
+        "10": 0.0001,
+        "50": 0.0005,
+        "100": 0.001,
+        "500": 0.005,
+        "1000": 0.01,
+        "5000": 0.05
+      }
+    },
+    {
+      "name": "Coin Change",
+      "timeComplexity": {
+        "best": "O(n * amount)",
+        "average": "O(n * amount)",
+        "worst": "O(n * amount)"
+      },
+      "spaceComplexity": "O(amount)",
+      "description": "Finds minimum number of coins needed to make a given amount using given coin denominations.",
+      "keyPoints": [
+        "Unbounded knapsack variant",
+        "Can be solved with 1D DP array",
+        "Handles duplicate coin usage",
+        "Classic combinatorial problem"
+      ],
+      "whenToUse": [
+        "Vending machine change calculation",
+        "Currency conversion systems",
+        "Any minimum count combination problem"
+      ],
+      "realWorldExample": "Vending machine change dispensing, currency exchange",
+      "runtimeData": {
+        "10": 0.0005,
+        "50": 0.003,
+        "100": 0.008,
+        "500": 0.04,
+        "1000": 0.1,
+        "5000": 0.8
+      }
+    },
+    {
+      "name": "Longest Common Subsequence (LCS)",
+      "timeComplexity": {
+        "best": "O(mn)",
+        "average": "O(mn)",
+        "worst": "O(mn)"
+      },
+      "spaceComplexity": "O(mn)",
+      "description": "Finds the longest subsequence common to two sequences (subsequence doesn't need to be contiguous).",
+      "keyPoints": [
+        "2D DP table solution",
+        "Can be space-optimized",
+        "Widely used in bioinformatics",
+        "Basis for diff tools"
+      ],
+      "whenToUse": [
+        "DNA sequence comparison",
+        "Version control diff tools",
+        "Plagiarism detection",
+        "File comparison"
+      ],
+      "realWorldExample": "Git diff, DNA sequence alignment, plagiarism checkers",
+      "runtimeData": {
+        "10": 0.001,
+        "50": 0.008,
+        "100": 0.03,
+        "500": 0.8,
+        "1000": 3.2,
+        "5000": 80.0
+      }
+    },
+    {
+      "name": "Pascal's Triangle",
+      "timeComplexity": {
+        "best": "O(n²)",
+        "average": "O(n²)",
+        "worst": "O(n²)"
+      },
+      "spaceComplexity": "O(n²)",
+      "description": "Constructs Pascal's triangle where each number is sum of two numbers directly above it.",
+      "keyPoints": [
+        "Demonstrates combinatorial numbers",
+        "Each row represents binomial coefficients",
+        "Can be generated iteratively",
+        "Useful for probability calculations"
+      ],
+      "whenToUse": [
+        "Combinatorics problems",
+        "Probability calculations",
+        "Binomial expansion",
+        "Teaching mathematical patterns"
+      ],
+      "realWorldExample": "Probability calculations in games, combinatorial mathematics",
+      "runtimeData": {
+        "10": 0.0005,
+        "50": 0.005,
+        "100": 0.02,
+        "500": 0.5,
+        "1000": 2.0,
+        "5000": 50.0
+      }
+    }
+  ]
+}

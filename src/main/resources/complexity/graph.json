@@ -1,0 +1,128 @@
+{
+  "category": "Graph Algorithms",
+  "algorithms": [
+    {
+      "name": "Breadth First Search (BFS)",
+      "timeComplexity": {
+        "best": "O(V + E)",
+        "average": "O(V + E)", 
+        "worst": "O(V + E)"
+      },
+      "spaceComplexity": "O(V)",
+      "description": "Explores graph level by level, visiting all neighbors at current depth before moving to next level.",
+      "keyPoints": [
+        "Finds shortest path in unweighted graphs",
+        "Uses queue data structure",
+        "Complete: Finds solution if it exists",
+        "Memory intensive for large graphs"
+      ],
+      "whenToUse": [
+        "Shortest path in unweighted graphs",
+        "Web crawling",
+        "Social network analysis",
+        "Finding connected components"
+      ],
+      "realWorldExample": "Social network friend recommendations, GPS navigation for shortest route",
+      "runtimeData": {
+        "10": 0.001,
+        "50": 0.005,
+        "100": 0.01,
+        "500": 0.08,
+        "1000": 0.2,
+        "5000": 1.2
+      }
+    },
+    {
+      "name": "Depth First Search (DFS)",
+      "timeComplexity": {
+        "best": "O(V + E)",
+        "average": "O(V + E)",
+        "worst": "O(V + E)"
+      },
+      "spaceComplexity": "O(V)",
+      "description": "Explores as far as possible along each branch before backtracking.",
+      "keyPoints": [
+        "Uses stack data structure (recursion)",
+        "Memory efficient for deep graphs",
+        "Can get stuck in infinite loops without proper cycle detection",
+        "Useful for topological sorting, cycle detection"
+      ],
+      "whenToUse": [
+        "Path finding",
+        "Cycle detection",
+        "Topological sorting",
+        "Solving puzzles with one solution"
+      ],
+      "realWorldExample": "Maze solving, dependency resolution in build systems",
+      "runtimeData": {
+        "10": 0.001,
+        "50": 0.004,
+        "100": 0.008,
+        "500": 0.06,
+        "1000": 0.15,
+        "5000": 1.0
+      }
+    },
+    {
+      "name": "Dijkstra's Algorithm",
+      "timeComplexity": {
+        "best": "O((V + E) log V)",
+        "average": "O((V + E) log V)",
+        "worst": "O((V + E) log V)"
+      },
+      "spaceComplexity": "O(V)",
+      "description": "Finds shortest path from source to all other vertices in weighted graphs with non-negative weights.",
+      "keyPoints": [
+        "Uses priority queue for efficiency",
+        "Greedy algorithm",
+        "Doesn't work with negative weight cycles",
+        "Finds shortest path in weighted graphs"
+      ],
+      "whenToUse": [
+        "GPS navigation systems",
+        "Network routing protocols",
+        "Any scenario with non-negative weighted graphs"
+      ],
+      "realWorldExample": "Google Maps shortest route, network packet routing",
+      "runtimeData": {
+        "10": 0.002,
+        "50": 0.015,
+        "100": 0.035,
+        "500": 0.3,
+        "1000": 0.8,
+        "5000": 5.0
+      }
+    },
+    {
+      "name": "Topological Sort",
+      "timeComplexity": {
+        "best": "O(V + E)",
+        "average": "O(V + E)",
+        "worst": "O(V + E)"
+      },
+      "spaceComplexity": "O(V)",
+      "description": "Linear ordering of vertices such that for every directed edge u→v, u comes before v in the ordering.",
+      "keyPoints": [
+        "Only works on Directed Acyclic Graphs (DAGs)",
+        "Can have multiple valid orderings",
+        "Uses DFS or Kahn's algorithm",
+        "Essential for dependency resolution"
+      ],
+      "whenToUse": [
+        "Task scheduling with dependencies",
+        "Build system dependency resolution",
+        "Course prerequisite ordering",
+        "Event scheduling"
+      ],
+      "realWorldExample": "Course prerequisite planning, build system task ordering",
+      "runtimeData": {
+        "10": 0.001,
+        "50": 0.004,
+        "100": 0.008,
+        "500": 0.06,
+        "1000": 0.15,
+        "5000": 1.0
+      }
+    }
+  ]
+}

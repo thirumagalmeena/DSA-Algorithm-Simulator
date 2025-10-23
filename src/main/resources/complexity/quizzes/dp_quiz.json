@@ -1,0 +1,23 @@
+{
+  "category": "Dynamic Programming",
+  "questions": [
+    {
+      "id": "dp-1",
+      "type": "multiple_choice",
+      "difficulty": "easy",
+      "question": "What is the main idea behind Dynamic Programming?",
+      "options": ["Divide and Conquer", "Memoization", "Greedy Choice", "Backtracking"],
+      "correctAnswer": 1,
+      "explanation": "DP uses memoization to store results of subproblems and avoid redundant calculations."
+    },
+    {
+      "id": "dp-2",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "What is the time complexity of the Fibonacci DP solution?",
+      "options": ["O(2ⁿ)", "O(n)", "O(n²)", "O(log n)"],
+      "correctAnswer": 1,
+      "explanation": "With memoization, Fibonacci can be solved in O(n) time instead of O(2ⁿ)."
+    }
+  ]
+}

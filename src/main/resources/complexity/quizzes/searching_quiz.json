@@ -1,0 +1,31 @@
+{
+  "category": "Searching Algorithms", 
+  "questions": [
+    {
+      "id": "search-1",
+      "type": "multiple_choice",
+      "difficulty": "easy",
+      "question": "What is the time complexity of Binary Search?",
+      "options": ["O(n)", "O(log n)", "O(n²)", "O(1)"],
+      "correctAnswer": 1,
+      "explanation": "Binary Search has O(log n) time complexity as it halves the search space in each iteration."
+    },
+    {
+      "id": "search-2",
+      "type": "multiple_choice",
+      "difficulty": "easy", 
+      "question": "Which search algorithm requires the data to be sorted?",
+      "options": ["Linear Search", "Binary Search", "Both", "Neither"],
+      "correctAnswer": 1,
+      "explanation": "Binary Search requires sorted data to efficiently halve the search space."
+    },
+    {
+      "id": "search-3",
+      "type": "true_false",
+      "difficulty": "medium",
+      "question": "Linear Search can be used on linked lists.",
+      "correctAnswer": true,
+      "explanation": "Linear Search works on any sequential data structure, including linked lists, with O(n) time complexity."
+    }
+  ]
+}

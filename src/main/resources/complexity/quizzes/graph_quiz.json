@@ -1,0 +1,32 @@
+{
+  "category": "Graph Algorithms",
+  "questions": [
+    {
+      "id": "graph-1",
+      "type": "multiple_choice",
+      "difficulty": "easy",
+      "question": "What is the time complexity of BFS on a graph?",
+      "options": ["O(V)", "O(E)", "O(V + E)", "O(V log E)"],
+      "correctAnswer": 2,
+      "explanation": "BFS visits each vertex and edge once, resulting in O(V + E) time complexity."
+    },
+    {
+      "id": "graph-2",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "Which algorithm finds the shortest path in weighted graphs with non-negative weights?",
+      "options": ["BFS", "DFS", "Dijkstra", "Topological Sort"],
+      "correctAnswer": 2,
+      "explanation": "Dijkstra's algorithm finds shortest paths in weighted graphs with non-negative edge weights."
+    },
+    {
+      "id": "graph-3",
+      "type": "multiple_choice",
+      "difficulty": "hard",
+      "question": "What data structure is typically used in Dijkstra's algorithm for efficiency?",
+      "options": ["Stack", "Queue", "Priority Queue", "Linked List"],
+      "correctAnswer": 2,
+      "explanation": "Priority Queue (Min-Heap) is used to efficiently extract the vertex with minimum distance."
+    }
+  ]
+}

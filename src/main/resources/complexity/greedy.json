@@ -1,0 +1,95 @@
+{
+  "category": "Greedy Algorithms",
+  "algorithms": [
+    {
+      "name": "Kruskal's Algorithm",
+      "timeComplexity": {
+        "best": "O(E log V)",
+        "average": "O(E log V)",
+        "worst": "O(E log V)"
+      },
+      "spaceComplexity": "O(E + V)",
+      "description": "Finds Minimum Spanning Tree by sorting all edges and adding them one by one, avoiding cycles.",
+      "keyPoints": [
+        "Uses Union-Find data structure",
+        "Works on sparse graphs",
+        "Always finds optimal MST",
+        "Edge-based approach"
+      ],
+      "whenToUse": [
+        "Sparse graphs",
+        "When edges are already sorted",
+        "Network design with minimum cable length"
+      ],
+      "realWorldExample": "Network cable layout, electrical grid design",
+      "runtimeData": {
+        "10": 0.003,
+        "50": 0.02,
+        "100": 0.05,
+        "500": 0.4,
+        "1000": 1.0,
+        "5000": 7.0
+      }
+    },
+    {
+      "name": "Prim's Algorithm",
+      "timeComplexity": {
+        "best": "O(E log V)",
+        "average": "O(E log V)",
+        "worst": "O(E log V)"
+      },
+      "spaceComplexity": "O(V)",
+      "description": "Finds Minimum Spanning Tree by growing tree from starting vertex, adding minimum weight edges.",
+      "keyPoints": [
+        "Vertex-based approach",
+        "Uses priority queue",
+        "Works better on dense graphs",
+        "Always finds optimal MST"
+      ],
+      "whenToUse": [
+        "Dense graphs",
+        "When graph is represented as adjacency matrix",
+        "Real-time MST updates"
+      ],
+      "realWorldExample": "Road network design, water pipe layout",
+      "runtimeData": {
+        "10": 0.002,
+        "50": 0.015,
+        "100": 0.04,
+        "500": 0.35,
+        "1000": 0.9,
+        "5000": 6.5
+      }
+    },
+    {
+      "name": "Job Scheduling",
+      "timeComplexity": {
+        "best": "O(n log n)",
+        "average": "O(n log n)",
+        "worst": "O(n log n)"
+      },
+      "spaceComplexity": "O(n)",
+      "description": "Schedules jobs with deadlines to maximize profit, selecting jobs in descending order of profit.",
+      "keyPoints": [
+        "Greedy selection by profit",
+        "Requires sorting of jobs",
+        "Optimal for single processor",
+        "Simple but effective"
+      ],
+      "whenToUse": [
+        "CPU task scheduling",
+        "Profit maximization problems",
+        "Single resource allocation"
+      ],
+      "realWorldExample": "CPU task scheduling, meeting room booking system",
+      "runtimeData": {
+        "10": 0.001,
+        "50": 0.008,
+        "100": 0.02,
+        "500": 0.15,
+        "1000": 0.35,
+        "5000": 2.5
+      }
+    }
+  ]
+}

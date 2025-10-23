@@ -1,0 +1,67 @@
+{
+  "category": "Searching Algorithms",
+  "algorithms": [
+    {
+      "name": "Linear Search",
+      "timeComplexity": {
+        "best": "O(1)",
+        "average": "O(n)",
+        "worst": "O(n)"
+      },
+      "spaceComplexity": "O(1)",
+      "description": "Sequentially checks each element of the list until a match is found or the whole list has been searched.",
+      "keyPoints": [
+        "Works on unsorted data",
+        "Simple to implement",
+        "Inefficient for large datasets",
+        "No pre-processing required"
+      ],
+      "whenToUse": [
+        "Small datasets",
+        "Unsorted data",
+        "When data is not searched frequently",
+        "Simple implementation requirement"
+      ],
+      "realWorldExample": "Finding a contact in small phonebook, searching small lists",
+      "runtimeData": {
+        "10": 0.001,
+        "50": 0.005,
+        "100": 0.01,
+        "500": 0.05,
+        "1000": 0.1,
+        "5000": 0.5
+      }
+    },
+    {
+      "name": "Binary Search",
+      "timeComplexity": {
+        "best": "O(1)",
+        "average": "O(log n)",
+        "worst": "O(log n)"
+      },
+      "spaceComplexity": "O(1)",
+      "description": "Efficiently finds the position of a target value within a sorted array by repeatedly dividing the search interval in half.",
+      "keyPoints": [
+        "Requires sorted data",
+        "Very efficient for large datasets",
+        "Divide and conquer approach",
+        "Can be implemented iteratively or recursively"
+      ],
+      "whenToUse": [
+        "Large sorted datasets",
+        "Frequent search operations",
+        "When data can be pre-sorted",
+        "Random access data structures"
+      ],
+      "realWorldExample": "Dictionary lookup, phonebook search, database indexing",
+      "runtimeData": {
+        "10": 0.001,
+        "50": 0.001,
+        "100": 0.001,
+        "500": 0.002,
+        "1000": 0.002,
+        "5000": 0.003
+      }
+    }
+  ]
+}

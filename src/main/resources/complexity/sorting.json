@@ -1,0 +1,158 @@
+{
+  "category": "Sorting Algorithms",
+  "algorithms": [
+    {
+      "name": "Bubble Sort",
+      "timeComplexity": {
+        "best": "O(n)",
+        "average": "O(n²)",
+        "worst": "O(n²)"
+      },
+      "spaceComplexity": "O(1)",
+      "description": "Repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order.",
+      "keyPoints": [
+        "Simple to understand and implement",
+        "Inefficient on large lists",
+        "Stable sorting algorithm",
+        "Adaptive: O(n) time when input is already sorted"
+      ],
+      "whenToUse": [
+        "Educational purposes",
+        "Small datasets",
+        "When simplicity is more important than efficiency"
+      ],
+      "realWorldExample": "Teaching basic sorting concepts to beginners",
+      "runtimeData": {
+        "10": 0.001,
+        "50": 0.025,
+        "100": 0.1,
+        "500": 2.5,
+        "1000": 10.0,
+        "5000": 250.0
+      }
+    },
+    {
+      "name": "Selection Sort",
+      "timeComplexity": {
+        "best": "O(n²)",
+        "average": "O(n²)",
+        "worst": "O(n²)"
+      },
+      "spaceComplexity": "O(1)",
+      "description": "Finds the minimum element and places it at the beginning, repeating for remaining elements.",
+      "keyPoints": [
+        "Makes minimum number of swaps: O(n) swaps",
+        "Not adaptive: Always O(n²) regardless of input",
+        "Not stable: May change relative order of equal elements",
+        "Performs well on small lists"
+      ],
+      "whenToUse": [
+        "When memory write is costly",
+        "Small datasets",
+        "When simplicity is preferred over stability"
+      ],
+      "realWorldExample": "Sorting small lists where write operations are expensive",
+      "runtimeData": {
+        "10": 0.001,
+        "50": 0.02,
+        "100": 0.08,
+        "500": 2.0,
+        "1000": 8.0,
+        "5000": 200.0
+      }
+    },
+    {
+      "name": "Insertion Sort",
+      "timeComplexity": {
+        "best": "O(n)",
+        "average": "O(n²)",
+        "worst": "O(n²)"
+      },
+      "spaceComplexity": "O(1)",
+      "description": "Builds the final sorted array one item at a time by inserting each element into its proper position.",
+      "keyPoints": [
+        "Efficient for small data sets",
+        "Adaptive: Efficient for partially sorted data",
+        "Stable: Maintains relative order of equal elements",
+        "Online: Can sort list as it receives it"
+      ],
+      "whenToUse": [
+        "Small datasets",
+        "Partially sorted data",
+        "When data is being received continuously",
+        "As the base case for hybrid sorting algorithms"
+      ],
+      "realWorldExample": "Sorting playing cards in hand, small datasets in real-time systems",
+      "runtimeData": {
+        "10": 0.0005,
+        "50": 0.015,
+        "100": 0.06,
+        "500": 1.5,
+        "1000": 6.0,
+        "5000": 150.0
+      }
+    },
+    {
+      "name": "Merge Sort",
+      "timeComplexity": {
+        "best": "O(n log n)",
+        "average": "O(n log n)",
+        "worst": "O(n log n)"
+      },
+      "spaceComplexity": "O(n)",
+      "description": "Divide and conquer algorithm that divides input array into two halves, sorts them, and then merges them.",
+      "keyPoints": [
+        "Consistent O(n log n) performance",
+        "Stable sorting algorithm",
+        "Not in-place: Requires O(n) extra space",
+        "Well-suited for external sorting (sorting data too large for RAM)"
+      ],
+      "whenToUse": [
+        "Large datasets",
+        "When stable sort is required",
+        "External sorting (data doesn't fit in memory)",
+        "Linked lists (efficient for linked lists)"
+      ],
+      "realWorldExample": "External sorting of large files, sorting linked lists",
+      "runtimeData": {
+        "10": 0.002,
+        "50": 0.012,
+        "100": 0.025,
+        "500": 0.15,
+        "1000": 0.3,
+        "5000": 1.8
+      }
+    },
+    {
+      "name": "Quick Sort",
+      "timeComplexity": {
+        "best": "O(n log n)",
+        "average": "O(n log n)",
+        "worst": "O(n²)"
+      },
+      "spaceComplexity": "O(log n)",
+      "description": "Divide and conquer algorithm that picks a pivot and partitions the array around it.",
+      "keyPoints": [
+        "Generally the fastest sorting algorithm in practice",
+        "In-place: O(log n) space for recursion stack",
+        "Not stable: May change relative order of equal elements",
+        "Performance depends on pivot selection"
+      ],
+      "whenToUse": [
+        "General-purpose sorting",
+        "When average-case performance matters more than worst-case",
+        "In-place sorting requirement",
+        "Large datasets in memory"
+      ],
+      "realWorldExample": "Default sorting in many programming languages, database indexing",
+      "runtimeData": {
+        "10": 0.001,
+        "50": 0.008,
+        "100": 0.018,
+        "500": 0.12,
+        "1000": 0.25,
+        "5000": 1.5
+      }
+    }
+  ]
+}

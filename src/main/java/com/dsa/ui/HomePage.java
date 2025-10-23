@@ -34,6 +34,7 @@ public class HomePage extends Application {
         // Create feature buttons
         Button viewAlgorithmsBtn = createStyledButton("View Algorithms", "#4CAF50");
         Button visualizeAlgoBtn = createStyledButton("Algorithm Visualizations", "#2196F3");
+        Button complexityAnalysisBtn = createStyledButton("Complexity Analysis", "#9C27B0");
         Button practiceBtn = createStyledButton("Practice Problems", "#FF9800");
         Button exitBtn = createStyledButton("Exit", "#f44336");
 
@@ -48,6 +49,11 @@ public class HomePage extends Application {
             vizPage.show();
         });
         
+        complexityAnalysisBtn.setOnAction(e -> {
+            ComplexityAnalyzerPage analyzer = new ComplexityAnalyzerPage(stage);
+            analyzer.show();
+        });
+        
         practiceBtn.setOnAction(e -> System.out.println("Practice Problems clicked"));
         exitBtn.setOnAction(e -> stage.close());
 
@@ -58,17 +64,17 @@ public class HomePage extends Application {
         VBox headerBox = new VBox(10, title, subtitle);
         headerBox.setAlignment(Pos.CENTER);
         
-        VBox buttonBox = new VBox(15, viewAlgorithmsBtn, visualizeAlgoBtn, practiceBtn, exitBtn);
+        VBox buttonBox = new VBox(15, viewAlgorithmsBtn, visualizeAlgoBtn, complexityAnalysisBtn, practiceBtn, exitBtn);
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.setMaxWidth(300);
 
         root.getChildren().addAll(headerBox, buttonBox, featurePanel);
 
-        Scene scene = new Scene(root, 600, 650);
+        Scene scene = new Scene(root, 600, 700); // Increased height for new button
         stage.setScene(scene);
         stage.setTitle("DSA Simulator - Home");
         stage.setMinWidth(600);
-        stage.setMinHeight(650);
+        stage.setMinHeight(700);
         stage.show();
     }
 
@@ -121,7 +127,9 @@ public class HomePage extends Application {
             "• Practice with curated problem sets",
             "• Step-by-step learning path",
             "• Real-time algorithm execution",
-            "• Multiple visualization types"
+            "• Multiple visualization types",
+            "• Complexity analysis and Big O notation",
+            "• Performance comparison tools"
         };
         
         for (String feature : features) {

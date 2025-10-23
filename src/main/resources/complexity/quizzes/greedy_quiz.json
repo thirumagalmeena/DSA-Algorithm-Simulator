@@ -1,0 +1,22 @@
+{
+  "category": "Greedy Algorithms", 
+  "questions": [
+    {
+      "id": "greedy-1",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "Which algorithm finds the Minimum Spanning Tree?",
+      "options": ["Dijkstra", "Kruskal", "BFS", "Quick Sort"],
+      "correctAnswer": 1,
+      "explanation": "Kruskal's algorithm finds MST by sorting edges and adding them without cycles."
+    },
+    {
+      "id": "greedy-2",
+      "type": "true_false",
+      "difficulty": "medium",
+      "question": "Greedy algorithms always find the globally optimal solution.",
+      "correctAnswer": false, 
+      "explanation": "Greedy algorithms make locally optimal choices but don't always guarantee global optimality."
+    }
+  ]
+}
