@@ -1,5 +1,5 @@
 {
-  "category": "Searching Algorithms", 
+  "category": "Searching Algorithms",
   "questions": [
     {
       "id": "search-1",
@@ -13,7 +13,7 @@
     {
       "id": "search-2",
       "type": "multiple_choice",
-      "difficulty": "easy", 
+      "difficulty": "easy",
       "question": "Which search algorithm requires the data to be sorted?",
       "options": ["Linear Search", "Binary Search", "Both", "Neither"],
       "correctAnswer": 1,
@@ -26,6 +26,171 @@
       "question": "Linear Search can be used on linked lists.",
       "correctAnswer": true,
       "explanation": "Linear Search works on any sequential data structure, including linked lists, with O(n) time complexity."
+    },
+    {
+      "id": "search-4",
+      "type": "multiple_choice",
+      "difficulty": "easy",
+      "question": "What is the worst-case time complexity of Linear Search?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(n²)"],
+      "correctAnswer": 2,
+      "explanation": "Linear Search has O(n) worst-case time complexity when the element is at the end or not present."
+    },
+    {
+      "id": "search-5",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "Which search algorithm uses a hash function?",
+      "options": ["Binary Search", "Linear Search", "Hashing", "Jump Search"],
+      "correctAnswer": 2,
+      "explanation": "Hashing uses hash functions to map keys to array indices for O(1) average-case search time."
+    },
+    {
+      "id": "search-6",
+      "type": "true_false",
+      "difficulty": "easy",
+      "question": "Binary Search can be implemented recursively.",
+      "correctAnswer": true,
+      "explanation": "Binary Search can be implemented using both iterative and recursive approaches."
+    },
+    {
+      "id": "search-7",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "What is the space complexity of iterative Binary Search?",
+      "options": ["O(n)", "O(log n)", "O(1)", "O(n²)"],
+      "correctAnswer": 2,
+      "explanation": "Iterative Binary Search has O(1) space complexity as it uses constant extra space."
+    },
+    {
+      "id": "search-8",
+      "type": "multiple_choice",
+      "difficulty": "hard",
+      "question": "Which search algorithm is optimal for unbounded searches?",
+      "options": ["Linear Search", "Binary Search", "Exponential Search", "Hashing"],
+      "correctAnswer": 2,
+      "explanation": "Exponential Search is efficient for unbounded/infinite arrays by doubling the range exponentially."
+    },
+    {
+      "id": "search-9",
+      "type": "true_false",
+      "difficulty": "medium",
+      "question": "Interpolation Search always performs better than Binary Search.",
+      "correctAnswer": false,
+      "explanation": "Interpolation Search performs better on uniformly distributed data, but worse on non-uniform data compared to Binary Search."
+    },
+    {
+      "id": "search-10",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "What is the best-case time complexity of Linear Search?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+      "correctAnswer": 0,
+      "explanation": "Linear Search has O(1) best-case time complexity when the element is found at the first position."
+    },
+    {
+      "id": "search-11",
+      "type": "multiple_choice",
+      "difficulty": "hard",
+      "question": "Which search algorithm uses the formula: pos = lo + ((x - arr[lo]) * (hi - lo)) / (arr[hi] - arr[lo])",
+      "options": ["Binary Search", "Jump Search", "Interpolation Search", "Exponential Search"],
+      "correctAnswer": 2,
+      "explanation": "Interpolation Search uses this formula to estimate the position of the target value in uniformly distributed data."
+    },
+    {
+      "id": "search-12",
+      "type": "true_false",
+      "difficulty": "easy",
+      "question": "Binary Search can be applied to arrays but not to linked lists.",
+      "correctAnswer": true,
+      "explanation": "Binary Search requires random access, which arrays provide but linked lists do not."
+    },
+    {
+      "id": "search-13",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "What is the time complexity of Jump Search?",
+      "options": ["O(1)", "O(log n)", "O(√n)", "O(n)"],
+      "correctAnswer": 2,
+      "explanation": "Jump Search has O(√n) time complexity by jumping in steps of √n and then performing linear search."
+    },
+    {
+      "id": "search-14",
+      "type": "multiple_choice",
+      "difficulty": "hard",
+      "question": "Which search algorithm combines binary search and linear search?",
+      "options": ["Exponential Search", "Interpolation Search", "Jump Search", "Ternary Search"],
+      "correctAnswer": 2,
+      "explanation": "Jump Search combines jumping through the array with linear search within blocks."
+    },
+    {
+      "id": "search-15",
+      "type": "true_false",
+      "difficulty": "medium",
+      "question": "Hashing provides O(1) search time in the worst case.",
+      "correctAnswer": false,
+      "explanation": "Hashing provides O(1) average-case search time, but worst-case can be O(n) due to collisions."
+    },
+    {
+      "id": "search-16",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "What is the main advantage of Ternary Search over Binary Search?",
+      "options": ["Faster convergence", "Works on unsorted data", "Uses less memory", "No advantage in 1D arrays"],
+      "correctAnswer": 3,
+      "explanation": "For one-dimensional arrays, Ternary Search has more comparisons and offers no advantage over Binary Search."
+    },
+    {
+      "id": "search-17",
+      "type": "multiple_choice",
+      "difficulty": "easy",
+      "question": "Which search algorithm is the simplest to implement?",
+      "options": ["Binary Search", "Linear Search", "Jump Search", "Exponential Search"],
+      "correctAnswer": 1,
+      "explanation": "Linear Search is the simplest to implement as it sequentially checks each element."
+    },
+    {
+      "id": "search-18",
+      "type": "true_false",
+      "difficulty": "hard",
+      "question": "Exponential Search works by first finding a range where the element may be present and then performing binary search.",
+      "correctAnswer": true,
+      "explanation": "Exponential Search first finds the range by doubling the index, then performs binary search within that range."
+    },
+    {
+      "id": "search-19",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "What data structure is most efficient for frequent search operations?",
+      "options": ["Array", "Linked List", "Hash Table", "Stack"],
+      "correctAnswer": 2,
+      "explanation": "Hash Table provides O(1) average-case search time, making it most efficient for frequent searches."
+    },
+    {
+      "id": "search-20",
+      "type": "multiple_choice",
+      "difficulty": "hard",
+      "question": "Which search algorithm is most suitable for searching in a rotated sorted array?",
+      "options": ["Linear Search", "Binary Search (modified)", "Jump Search", "Hashing"],
+      "correctAnswer": 1,
+      "explanation": "A modified Binary Search can efficiently search in a rotated sorted array in O(log n) time."
+    },
+    {
+      "id": "search-21",
+      "type": "true_false",
+      "difficulty": "medium",
+      "question": "Binary Search Tree (BST) search has O(log n) time complexity in all cases.",
+      "correctAnswer": false,
+      "explanation": "BST search has O(log n) time complexity only for balanced trees; worst-case can be O(n) for skewed trees."
+    },
+    {
+      "id": "search-22",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "What is the key requirement for Fibonacci Search?",
+      "options": ["Array must be sorted", "Array size must be Fibonacci number", "Array must be uniformly distributed", "No requirements"],
+      "correctAnswer": 0,
+      "explanation": "Like Binary Search, Fibonacci Search requires the array to be sorted in ascending order."
     }
   ]
 }

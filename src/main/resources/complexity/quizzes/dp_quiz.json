@@ -18,6 +18,180 @@
       "options": ["O(2ⁿ)", "O(n)", "O(n²)", "O(log n)"],
       "correctAnswer": 1,
       "explanation": "With memoization, Fibonacci can be solved in O(n) time instead of O(2ⁿ)."
+    },
+    {
+      "id": "dp-3",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "Which problem is commonly solved using Dynamic Programming?",
+      "options": ["0/1 Knapsack", "Binary Search", "Bubble Sort", "Linear Search"],
+      "correctAnswer": 0,
+      "explanation": "0/1 Knapsack is a classic DP problem where we decide whether to include items or not."
+    },
+    {
+      "id": "dp-4",
+      "type": "true_false",
+      "difficulty": "easy",
+      "question": "Dynamic Programming always requires more space than greedy algorithms.",
+      "correctAnswer": false,
+      "explanation": "Not necessarily - some DP solutions can be optimized to use minimal space."
+    },
+    {
+      "id": "dp-5",
+      "type": "multiple_choice",
+      "difficulty": "hard",
+      "question": "What are the two main approaches in Dynamic Programming?",
+      "options": ["Top-down and Bottom-up", "Greedy and Divide-conquer", "BFS and DFS", "Iterative and Recursive"],
+      "correctAnswer": 0,
+      "explanation": "Top-down (memoization) and Bottom-up (tabulation) are the two main DP approaches."
+    },
+    {
+      "id": "dp-6",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "What is the time complexity of the 0/1 Knapsack DP solution?",
+      "options": ["O(n)", "O(2ⁿ)", "O(nW)", "O(n log n)"],
+      "correctAnswer": 2,
+      "explanation": "0/1 Knapsack has O(nW) time complexity where n is items and W is capacity."
+    },
+    {
+      "id": "dp-7",
+      "type": "true_false",
+      "difficulty": "medium",
+      "question": "All problems with optimal substructure can be solved by Dynamic Programming.",
+      "correctAnswer": false,
+      "explanation": "Problems need both optimal substructure and overlapping subproblems for DP to be effective."
+    },
+    {
+      "id": "dp-8",
+      "type": "multiple_choice",
+      "difficulty": "easy",
+      "question": "Which property must a problem have to be suitable for DP?",
+      "options": ["Greedy choice", "Overlapping subproblems", "Linear time", "Constant space"],
+      "correctAnswer": 1,
+      "explanation": "Overlapping subproblems allow DP to avoid redundant calculations through memoization."
+    },
+    {
+      "id": "dp-9",
+      "type": "multiple_choice",
+      "difficulty": "hard",
+      "question": "What is the space-optimized time complexity for the Longest Common Subsequence?",
+      "options": ["O(mn)", "O(m)", "O(n)", "O(min(m,n))"],
+      "correctAnswer": 0,
+      "explanation": "Even with space optimization, LCS still requires O(mn) time complexity."
+    },
+    {
+      "id": "dp-10",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "Which algorithm paradigm is closest to Dynamic Programming?",
+      "options": ["Greedy", "Divide and Conquer", "Backtracking", "Brute Force"],
+      "correctAnswer": 1,
+      "explanation": "DP is similar to Divide and Conquer but solves overlapping subproblems optimally."
+    },
+    {
+      "id": "dp-11",
+      "type": "true_false",
+      "difficulty": "easy",
+      "question": "Memoization is the same as caching.",
+      "correctAnswer": true,
+      "explanation": "Memoization is essentially caching the results of expensive function calls."
+    },
+    {
+      "id": "dp-12",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "What is the time complexity of the matrix chain multiplication DP solution?",
+      "options": ["O(n)", "O(n²)", "O(n³)", "O(2ⁿ)"],
+      "correctAnswer": 2,
+      "explanation": "Matrix chain multiplication has O(n³) time complexity using dynamic programming."
+    },
+    {
+      "id": "dp-13",
+      "type": "multiple_choice",
+      "difficulty": "hard",
+      "question": "Which problem demonstrates the 'optimal substructure' property?",
+      "options": ["Shortest Path", "Tower of Hanoi", "N-Queens", "All of these"],
+      "correctAnswer": 0,
+      "explanation": "Shortest path has optimal substructure - optimal solution contains optimal sub-solutions."
+    },
+    {
+      "id": "dp-14",
+      "type": "true_false",
+      "difficulty": "medium",
+      "question": "Dynamic Programming can solve problems that greedy algorithms cannot.",
+      "correctAnswer": true,
+      "explanation": "DP can solve problems like 0/1 Knapsack where greedy approaches fail to find optimal solution."
+    },
+    {
+      "id": "dp-15",
+      "type": "multiple_choice",
+      "difficulty": "easy",
+      "question": "What does 'DP' stand for in computer science?",
+      "options": ["Data Processing", "Dynamic Programming", "Distributed Processing", "Digital Programming"],
+      "correctAnswer": 1,
+      "explanation": "DP stands for Dynamic Programming - an optimization technique for solving complex problems."
+    },
+    {
+      "id": "dp-16",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "Which data structure is commonly used in DP implementations?",
+      "options": ["Stack", "Queue", "Array/Table", "Linked List"],
+      "correctAnswer": 2,
+      "explanation": "DP typically uses arrays or tables to store solutions to subproblems."
+    },
+    {
+      "id": "dp-17",
+      "type": "true_false",
+      "difficulty": "hard",
+      "question": "The coin change problem can be solved using both greedy and dynamic programming approaches.",
+      "correctAnswer": false,
+      "explanation": "For arbitrary coin denominations, only DP guarantees optimal solution; greedy may fail."
+    },
+    {
+      "id": "dp-18",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "What is the space complexity of the basic Fibonacci DP solution?",
+      "options": ["O(1)", "O(n)", "O(n²)", "O(2ⁿ)"],
+      "correctAnswer": 1,
+      "explanation": "Basic Fibonacci DP uses O(n) space to store previously computed values."
+    },
+    {
+      "id": "dp-19",
+      "type": "multiple_choice",
+      "difficulty": "hard",
+      "question": "Which DP problem involves finding the longest increasing sequence?",
+      "options": ["LIS", "LCS", "EDIT", "KNAPSACK"],
+      "correctAnswer": 0,
+      "explanation": "LIS (Longest Increasing Subsequence) is a classic DP problem."
+    },
+    {
+      "id": "dp-20",
+      "type": "true_false",
+      "difficulty": "easy",
+      "question": "Dynamic Programming always produces the optimal solution.",
+      "correctAnswer": true,
+      "explanation": "When applicable, DP guarantees optimal solutions due to its systematic approach."
+    },
+    {
+      "id": "dp-21",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "What is the key difference between DP and Divide & Conquer?",
+      "options": ["DP uses recursion", "DP has overlapping subproblems", "DP is faster", "No difference"],
+      "correctAnswer": 1,
+      "explanation": "The key difference is that DP problems have overlapping subproblems while Divide & Conquer problems don't."
+    },
+    {
+      "id": "dp-22",
+      "type": "multiple_choice",
+      "difficulty": "hard",
+      "question": "Which optimization can reduce space complexity in DP problems?",
+      "options": ["Memoization", "Tabulation", "State compression", "All of these"],
+      "correctAnswer": 2,
+      "explanation": "State compression techniques can reduce space complexity by storing only necessary information."
     }
   ]
 }

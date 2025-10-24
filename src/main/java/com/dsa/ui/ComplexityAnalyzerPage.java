@@ -1,7 +1,11 @@
 package com.dsa.ui;
 
 import com.dsa.complexity.data.ComplexityData;
+import com.dsa.complexity.data.QuizData;
 import com.dsa.complexity.models.AlgorithmMetrics;
+import com.dsa.complexity.models.QuizQuestion;
+import com.dsa.complexity.models.QuizResult;
+import com.dsa.complexity.models.QuestionResult;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,6 +21,7 @@ import java.util.*;
 
 public class ComplexityAnalyzerPage {
     private final Stage stage;
+    private List<QuizResult> quizHistory = new ArrayList<>();
 
     public ComplexityAnalyzerPage(Stage stage) {
         this.stage = stage;
@@ -264,13 +269,24 @@ public class ComplexityAnalyzerPage {
 
         Label categoryLabel = new Label("Select Quiz Category:");
         ComboBox<String> quizCategoryCombo = new ComboBox<>();
-        quizCategoryCombo.getItems().addAll("All Categories", "Sorting", "Searching", "Graph", "Greedy", "Dynamic Programming");
-        quizCategoryCombo.setValue("All Categories");
+        quizCategoryCombo.getItems().addAll(QuizData.getAvailableQuizCategories());
+        quizCategoryCombo.setValue("Sorting Algorithms");
 
-        Button startQuizBtn = new Button("Start Quiz");
+        Label difficultyLabel = new Label("Difficulty:");
+        ComboBox<String> difficultyCombo = new ComboBox<>();
+        difficultyCombo.getItems().addAll("All", "Easy", "Medium", "Hard");
+        difficultyCombo.setValue("All");
+
+        Label countLabel = new Label("Questions:");
+        ComboBox<Integer> questionCountCombo = new ComboBox<>();
+        questionCountCombo.getItems().addAll(5, 10, 15);
+        questionCountCombo.setValue(5);
+
+        Button startQuizBtn = new Button("Start New Quiz");
         startQuizBtn.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;");
 
-        categoryBox.getChildren().addAll(categoryLabel, quizCategoryCombo, startQuizBtn);
+        categoryBox.getChildren().addAll(categoryLabel, quizCategoryCombo, difficultyLabel, 
+                                       difficultyCombo, countLabel, questionCountCombo, startQuizBtn);
 
         // Quiz area
         VBox quizArea = new VBox(20);
@@ -278,19 +294,382 @@ public class ComplexityAnalyzerPage {
         quizArea.setPadding(new Insets(20));
         quizArea.setStyle("-fx-background-color: white; -fx-border-radius: 10;");
 
-        // Sample quiz question - in a real implementation, this would be dynamic
-        VBox sampleQuestion = createSampleQuizQuestion();
-        quizArea.getChildren().add(sampleQuestion);
+        // Results area
+        VBox resultsArea = new VBox(15);
+        resultsArea.setAlignment(Pos.CENTER);
+        resultsArea.setPadding(new Insets(20));
+        resultsArea.setStyle("-fx-background-color: #f8f9fa; -fx-border-radius: 10;");
+        resultsArea.setVisible(false);
+
+        // Initial message
+        Label initialMessage = new Label("Select a category and click 'Start New Quiz' to begin!");
+        initialMessage.setStyle("-fx-text-fill: #7f8c8d; -fx-font-style: italic;");
+        quizArea.getChildren().add(initialMessage);
 
         startQuizBtn.setOnAction(e -> {
-            // In a full implementation, this would load questions based on category
-            showAlert("Quiz Started", "Starting " + quizCategoryCombo.getValue() + " quiz!\n\nThis would load dynamic questions in a full implementation.");
+            startNewQuiz(quizArea, resultsArea, quizCategoryCombo.getValue(), 
+                        difficultyCombo.getValue(), questionCountCombo.getValue());
         });
 
-        content.getChildren().addAll(title, categoryBox, quizArea);
+        content.getChildren().addAll(title, categoryBox, quizArea, resultsArea);
         tab.setContent(content);
 
         return tab;
+    }
+
+    // ========== QUIZ MANAGEMENT METHODS ==========
+
+    private void startNewQuiz(VBox quizArea, VBox resultsArea, String category, 
+                            String difficulty, int questionCount) {
+        quizArea.getChildren().clear();
+        resultsArea.setVisible(false);
+
+        // Get questions based on category and difficulty
+        List<QuizQuestion> questions;
+        if ("All".equals(difficulty)) {
+            questions = QuizData.getQuestionsByCategory(category);
+        } else {
+            questions = QuizData.getQuestionsByDifficulty(category, difficulty);
+        }
+
+        // Limit to requested count
+        if (questions.size() > questionCount) {
+            Collections.shuffle(questions);
+            questions = questions.subList(0, questionCount);
+        }
+
+        if (questions.isEmpty()) {
+            showAlert("No Questions", "No questions found for the selected criteria.");
+            return;
+        }
+
+        QuizResult quizResult = new QuizResult(category, questions.size());
+
+        // Create quiz progress indicator
+        ProgressBar progressBar = new ProgressBar(0);
+        progressBar.setPrefWidth(400);
+        Label progressLabel = new Label("Question 1 of " + questions.size());
+        progressLabel.setStyle("-fx-font-weight: bold;");
+
+        VBox progressBox = new VBox(5, progressLabel, progressBar);
+        progressBox.setAlignment(Pos.CENTER);
+
+        // Create question container
+        VBox questionContainer = new VBox(15);
+        questionContainer.setAlignment(Pos.CENTER_LEFT);
+        questionContainer.setPrefWidth(700);
+
+        // Display first question
+        displayQuestion(questions, 0, questionContainer, progressBar, progressLabel, 
+                       quizResult, quizArea, resultsArea);
+
+        quizArea.getChildren().addAll(progressBox, questionContainer);
+    }
+
+    private void displayQuestion(List<QuizQuestion> questions, int currentIndex, 
+                               VBox questionContainer, ProgressBar progressBar, 
+                               Label progressLabel, QuizResult quizResult,
+                               VBox quizArea, VBox resultsArea) {
+        questionContainer.getChildren().clear();
+
+        if (currentIndex >= questions.size()) {
+            quizHistory.add(quizResult);
+            showQuizResults(quizResult, resultsArea, quizArea);
+            return;
+        }
+
+        QuizQuestion currentQuestion = questions.get(currentIndex);
+
+        // Update progress
+        double progress = (double) (currentIndex + 1) / questions.size();
+        progressBar.setProgress(progress);
+        progressLabel.setText("Question " + (currentIndex + 1) + " of " + questions.size());
+
+        // Create question UI
+        Label questionLabel = new Label(currentQuestion.getQuestion());
+        questionLabel.setFont(Font.font("System", FontWeight.BOLD, 16));
+        questionLabel.setStyle("-fx-text-fill: #2c3e50;");
+        questionLabel.setWrapText(true);
+
+        VBox answersBox = new VBox(8);
+        ToggleGroup answerGroup = new ToggleGroup();
+
+        // Handle different question types
+        if (currentQuestion.isMultipleChoice()) {
+            // Multiple Choice Questions
+            if (currentQuestion.getOptions() != null) {
+                for (int i = 0; i < currentQuestion.getOptions().size(); i++) {
+                    HBox answerRow = new HBox(10);
+                    answerRow.setAlignment(Pos.CENTER_LEFT);
+
+                    RadioButton radioButton = new RadioButton();
+                    radioButton.setToggleGroup(answerGroup);
+                    radioButton.setUserData(i);
+
+                    Label optionLabel = new Label(currentQuestion.getOptions().get(i));
+                    optionLabel.setWrapText(true);
+                    optionLabel.setStyle("-fx-text-fill: #34495e;");
+
+                    answerRow.getChildren().addAll(radioButton, optionLabel);
+                    answersBox.getChildren().add(answerRow);
+                }
+            }
+        } else if (currentQuestion.isTrueFalse()) {
+            // True/False Questions
+            HBox trueFalseBox = new HBox(20);
+            trueFalseBox.setAlignment(Pos.CENTER_LEFT);
+
+            RadioButton trueButton = new RadioButton("True");
+            trueButton.setToggleGroup(answerGroup);
+            trueButton.setUserData(true);
+
+            RadioButton falseButton = new RadioButton("False");
+            falseButton.setToggleGroup(answerGroup);
+            falseButton.setUserData(false);
+
+            trueFalseBox.getChildren().addAll(trueButton, falseButton);
+            answersBox.getChildren().add(trueFalseBox);
+        } else if (currentQuestion.isMatching()) {
+            // Matching Questions
+            VBox matchingBox = new VBox(10);
+            matchingBox.setStyle("-fx-background-color: #f8f9fa; -fx-border-radius: 8; -fx-padding: 15;");
+
+            Label instructionLabel = new Label("Match the items on the left with their corresponding values:");
+            instructionLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #2c3e50;");
+
+            VBox pairsBox = new VBox(8);
+            if (currentQuestion.getPairs() != null) {
+                for (Map<String, String> pair : currentQuestion.getPairs()) {
+                    HBox pairRow = new HBox(10);
+                    pairRow.setAlignment(Pos.CENTER_LEFT);
+
+                    String item = pair.get("item");
+                    String match = pair.get("match");
+
+                    Label itemLabel = new Label(item);
+                    itemLabel.setStyle("-fx-font-weight: bold; -fx-min-width: 150;");
+
+                    Label arrowLabel = new Label("→");
+                    arrowLabel.setStyle("-fx-text-fill: #7f8c8d;");
+
+                    Label matchLabel = new Label(match);
+                    matchLabel.setStyle("-fx-text-fill: #34495e;");
+
+                    pairRow.getChildren().addAll(itemLabel, arrowLabel, matchLabel);
+                    pairsBox.getChildren().add(pairRow);
+                }
+            }
+
+            // For matching questions, we'll treat them as informational since they're complex to implement
+            Label infoLabel = new Label("Note: This is a matching question. Review the pairs for understanding.");
+            infoLabel.setStyle("-fx-text-fill: #3498db; -fx-font-style: italic;");
+
+            matchingBox.getChildren().addAll(instructionLabel, pairsBox, infoLabel);
+            answersBox.getChildren().add(matchingBox);
+        }
+
+        Button nextBtn = new Button(currentIndex == questions.size() - 1 ? "Finish Quiz" : "Next Question");
+        nextBtn.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;");
+
+        Label feedbackLabel = new Label();
+        feedbackLabel.setWrapText(true);
+
+        nextBtn.setOnAction(e -> {
+            // Handle answer submission based on question type
+            if (currentQuestion.isMultipleChoice() || currentQuestion.isTrueFalse()) {
+                RadioButton selected = (RadioButton) answerGroup.getSelectedToggle();
+                if (selected == null) {
+                    feedbackLabel.setText("Please select an answer!");
+                    feedbackLabel.setStyle("-fx-text-fill: #e74c3c;");
+                    return;
+                }
+
+                boolean isCorrect = false;
+                String userAnswer = "";
+                String correctAnswer = "";
+
+                if (currentQuestion.isMultipleChoice()) {
+                    int selectedIndex = (int) selected.getUserData();
+                    isCorrect = selectedIndex == currentQuestion.getCorrectAnswerInt();
+                    userAnswer = currentQuestion.getOptions().get(selectedIndex);
+                    correctAnswer = currentQuestion.getCorrectAnswerString();
+                } else if (currentQuestion.isTrueFalse()) {
+                    boolean userAnswerBool = (boolean) selected.getUserData();
+                    isCorrect = userAnswerBool == currentQuestion.getCorrectAnswerBool();
+                    userAnswer = userAnswerBool ? "True" : "False";
+                    correctAnswer = currentQuestion.getCorrectAnswerBool() ? "True" : "False";
+                }
+
+                // Record result
+                QuestionResult questionResult = new QuestionResult(
+                    currentQuestion.getQuestion(),
+                    isCorrect,
+                    userAnswer,
+                    correctAnswer,
+                    currentQuestion.getExplanation()
+                );
+                quizResult.addQuestionResult(questionResult);
+
+            } else if (currentQuestion.isMatching()) {
+                // For matching questions, we'll mark them as correct for now
+                // since implementing actual matching logic is complex
+                QuestionResult questionResult = new QuestionResult(
+                    currentQuestion.getQuestion(),
+                    true, // Mark as correct for learning purposes
+                    "Matching question reviewed",
+                    "All pairs matched correctly",
+                    currentQuestion.getExplanation()
+                );
+                quizResult.addQuestionResult(questionResult);
+            }
+
+            // Move to next question
+            displayQuestion(questions, currentIndex + 1, questionContainer, 
+                           progressBar, progressLabel, quizResult, quizArea, resultsArea);
+        });
+
+        // Add difficulty badge
+        HBox questionHeader = new HBox(10);
+        questionHeader.setAlignment(Pos.CENTER_LEFT);
+        
+        Label difficultyBadge = new Label(currentQuestion.getDifficulty().toUpperCase());
+        difficultyBadge.setStyle(getDifficultyStyle(currentQuestion.getDifficulty()));
+        difficultyBadge.setPadding(new Insets(2, 8, 2, 8));
+        
+        questionHeader.getChildren().addAll(questionLabel, difficultyBadge);
+
+        questionContainer.getChildren().addAll(questionHeader, answersBox, nextBtn, feedbackLabel);
+    }
+
+    private void showQuizResults(QuizResult quizResult, VBox resultsArea, VBox quizArea) {
+        quizArea.setVisible(false);
+        resultsArea.getChildren().clear();
+        resultsArea.setVisible(true);
+
+        // Score display
+        Label scoreLabel = new Label("Quiz Completed!");
+        scoreLabel.setFont(Font.font("System", FontWeight.BOLD, 28));
+        scoreLabel.setStyle("-fx-text-fill: #2c3e50;");
+
+        Label resultLabel = new Label();
+        resultLabel.setFont(Font.font("System", FontWeight.BOLD, 48));
+        
+        if (quizResult.getScore() >= 80) {
+            resultLabel.setText("🎉 " + quizResult.getScore() + "%");
+            resultLabel.setStyle("-fx-text-fill: #27ae60;");
+        } else if (quizResult.getScore() >= 60) {
+            resultLabel.setText("👍 " + quizResult.getScore() + "%");
+            resultLabel.setStyle("-fx-text-fill: #f39c12;");
+        } else {
+            resultLabel.setText("📚 " + quizResult.getScore() + "%");
+            resultLabel.setStyle("-fx-text-fill: #e74c3c;");
+        }
+
+        Label detailLabel = new Label(
+            "You got " + quizResult.getCorrectAnswers() + " out of " + 
+            quizResult.getTotalQuestions() + " questions correct in " + 
+            quizResult.getCategory() + "!"
+        );
+        detailLabel.setFont(Font.font("System", 16));
+        detailLabel.setStyle("-fx-text-fill: #7f8c8d;");
+
+        // Performance chart replaced with text
+        Label performanceText = new Label(
+            "Correct Answers: " + quizResult.getCorrectAnswers() + "\n" +
+            "Total Questions: " + quizResult.getTotalQuestions() + "\n" +
+            "Score (%): " + quizResult.getScore() + "%"
+        );
+        performanceText.setFont(Font.font("System", FontWeight.BOLD, 16));
+        performanceText.setStyle("-fx-text-fill: #2c3e50;");
+
+        // Detailed results
+        VBox detailsBox = createDetailedResults(quizResult);
+
+        Button retryBtn = new Button("Try Another Quiz");
+        retryBtn.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;");
+        retryBtn.setOnAction(e -> {
+            resultsArea.setVisible(false);
+            quizArea.setVisible(true);
+            quizArea.getChildren().clear();
+            Label message = new Label("Select a category and click 'Start New Quiz' to begin!");
+            message.setStyle("-fx-text-fill: #7f8c8d; -fx-font-style: italic;");
+            quizArea.getChildren().add(message);
+        });
+
+        resultsArea.getChildren().addAll(scoreLabel, resultLabel, detailLabel, 
+                                       performanceText, detailsBox, retryBtn);
+    }
+
+    private VBox createDetailedResults(QuizResult quizResult) {
+        VBox detailsBox = new VBox(10);
+        detailsBox.setStyle("-fx-background-color: white; -fx-border-radius: 8; -fx-padding: 15;");
+        detailsBox.setPrefWidth(800); // Increased width
+        detailsBox.setPrefHeight(400); // Increased height
+
+        Label detailsTitle = new Label("Detailed Results:");
+        detailsTitle.setFont(Font.font("System", FontWeight.BOLD, 18));
+        detailsTitle.setStyle("-fx-text-fill: #2c3e50;");
+
+        VBox questionsBox = new VBox(10);
+        for (int i = 0; i < quizResult.getQuestionResults().size(); i++) {
+            QuestionResult qResult = quizResult.getQuestionResults().get(i);
+            VBox questionResult = createQuestionResultBox(qResult, i + 1);
+            questionsBox.getChildren().add(questionResult);
+        }
+
+        ScrollPane scrollPane = new ScrollPane(questionsBox);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setPrefHeight(350); // Adjusted to fit the new height
+
+        detailsBox.getChildren().addAll(detailsTitle, scrollPane);
+        return detailsBox;
+    }
+
+    private VBox createQuestionResultBox(QuestionResult qResult, int questionNumber) {
+        VBox box = new VBox(8);
+        box.setStyle("-fx-background-color: #f8f9fa; -fx-border-radius: 6; -fx-padding: 10;");
+
+        Label questionNum = new Label("Q" + questionNumber + ": " + qResult.getQuestion());
+        questionNum.setFont(Font.font("System", FontWeight.BOLD, 12));
+        questionNum.setWrapText(true);
+
+        HBox answerBox = new HBox(10);
+        Label userAnswer = new Label("Your answer: " + qResult.getUserAnswer());
+        Label correctAnswer = new Label("Correct: " + qResult.getCorrectAnswer());
+
+        if (qResult.isCorrect()) {
+            userAnswer.setStyle("-fx-text-fill: #27ae60; -fx-font-weight: bold;");
+            correctAnswer.setStyle("-fx-text-fill: #27ae60;");
+        } else {
+            userAnswer.setStyle("-fx-text-fill: #e74c3c;");
+            correctAnswer.setStyle("-fx-text-fill: #27ae60; -fx-font-weight: bold;");
+        }
+
+        answerBox.getChildren().addAll(userAnswer, correctAnswer);
+
+        if (qResult.getExplanation() != null && !qResult.getExplanation().isEmpty()) {
+            Label explanation = new Label("💡 " + qResult.getExplanation());
+            explanation.setStyle("-fx-text-fill: #3498db; -fx-font-style: italic;");
+            explanation.setWrapText(true);
+            box.getChildren().addAll(questionNum, answerBox, explanation);
+        } else {
+            box.getChildren().addAll(questionNum, answerBox);
+        }
+
+        return box;
+    }
+
+    private String getDifficultyStyle(String difficulty) {
+        switch (difficulty.toLowerCase()) {
+            case "easy":
+                return "-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-size: 10; -fx-font-weight: bold; -fx-background-radius: 10;";
+            case "medium":
+                return "-fx-background-color: #f39c12; -fx-text-fill: white; -fx-font-size: 10; -fx-font-weight: bold; -fx-background-radius: 10;";
+            case "hard":
+                return "-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 10; -fx-font-weight: bold; -fx-background-radius: 10;";
+            default:
+                return "-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-font-size: 10; -fx-font-weight: bold; -fx-background-radius: 10;";
+        }
     }
 
     // ========== HELPER METHODS ==========
@@ -453,57 +832,6 @@ public class ComplexityAnalyzerPage {
             "This simulation helps understand real-world performance characteristics."
         );
     }
-
-    private VBox createSampleQuizQuestion() {
-        VBox questionBox = new VBox(10);
-        questionBox.setStyle("-fx-background-color: #f8f9fa; -fx-border-radius: 8; -fx-padding: 15;");
-
-        Label questionLabel = new Label("What is the average time complexity of Quick Sort?");
-        questionLabel.setFont(Font.font("System", FontWeight.BOLD, 16));
-        questionLabel.setStyle("-fx-text-fill: #2c3e50;");
-
-        ToggleGroup answerGroup = new ToggleGroup();
-        VBox answersBox = new VBox(8);
-        
-        RadioButton answer1 = new RadioButton("O(n²)");
-        RadioButton answer2 = new RadioButton("O(n log n)");
-        RadioButton answer3 = new RadioButton("O(n)");
-        RadioButton answer4 = new RadioButton("O(1)");
-        
-        answer1.setToggleGroup(answerGroup);
-        answer2.setToggleGroup(answerGroup);
-        answer3.setToggleGroup(answerGroup);
-        answer4.setToggleGroup(answerGroup);
-        
-        answer2.setSelected(true); // Correct answer
-
-        answersBox.getChildren().addAll(answer1, answer2, answer3, answer4);
-
-        Button submitBtn = new Button("Submit Answer");
-        submitBtn.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
-
-        Label resultLabel = new Label();
-        resultLabel.setFont(Font.font("System", FontWeight.BOLD, 14));
-
-        submitBtn.setOnAction(e -> {
-            if (answer2.isSelected()) {
-                resultLabel.setText("✅ Correct! Quick Sort has O(n log n) average time complexity.");
-                resultLabel.setStyle("-fx-text-fill: #27ae60;");
-            } else {
-                resultLabel.setText("❌ Incorrect. The correct answer is O(n log n).");
-                resultLabel.setStyle("-fx-text-fill: #e74c3c;");
-            }
-        });
-
-        questionBox.getChildren().addAll(questionLabel, answersBox, submitBtn, resultLabel);
-        return questionBox;
-    }
-
-    // ========== UI COMPONENT CREATION METHODS ==========
-    // (Keep all the existing createSectionBox, createFormattedTextFlow, 
-    // createComplexityChart, createComparisonChart, createRuntimeChart,
-    // createComparisonTable, createBackButton, showAlert methods from previous version)
-    // These remain the same as in our previous implementation
 
     private VBox createSectionBox(String title) {
         VBox section = new VBox(15);

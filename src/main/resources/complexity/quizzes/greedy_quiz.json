@@ -1,5 +1,5 @@
 {
-  "category": "Greedy Algorithms", 
+  "category": "Greedy Algorithms",
   "questions": [
     {
       "id": "greedy-1",
@@ -15,8 +15,182 @@
       "type": "true_false",
       "difficulty": "medium",
       "question": "Greedy algorithms always find the globally optimal solution.",
-      "correctAnswer": false, 
+      "correctAnswer": false,
       "explanation": "Greedy algorithms make locally optimal choices but don't always guarantee global optimality."
+    },
+    {
+      "id": "greedy-3",
+      "type": "multiple_choice",
+      "difficulty": "easy",
+      "question": "Which greedy algorithm is used for coin change problem when it works?",
+      "options": ["Prim's", "Kruskal's", "Coin Change Greedy", "Huffman Coding"],
+      "correctAnswer": 2,
+      "explanation": "The coin change greedy algorithm selects the largest denomination first, but only works for certain coin systems."
+    },
+    {
+      "id": "greedy-4",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "What is the time complexity of Prim's algorithm using adjacency matrix?",
+      "options": ["O(V²)", "O(E log V)", "O(V log E)", "O(E + V)"],
+      "correctAnswer": 0,
+      "explanation": "Prim's algorithm with adjacency matrix has O(V²) time complexity."
+    },
+    {
+      "id": "greedy-5",
+      "type": "true_false",
+      "difficulty": "easy",
+      "question": "Dijkstra's algorithm works for graphs with negative weight edges.",
+      "correctAnswer": false,
+      "explanation": "Dijkstra's algorithm doesn't work with negative weight edges as it may not find the shortest path."
+    },
+    {
+      "id": "greedy-6",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "Which problem is optimally solved by greedy algorithms?",
+      "options": ["0/1 Knapsack", "Fractional Knapsack", "Traveling Salesman", "N-Queens"],
+      "correctAnswer": 1,
+      "explanation": "Fractional Knapsack can be optimally solved by greedy approach using value-to-weight ratio."
+    },
+    {
+      "id": "greedy-7",
+      "type": "multiple_choice",
+      "difficulty": "hard",
+      "question": "What is the main difference between Prim's and Kruskal's algorithms?",
+      "options": ["Prim's works on trees, Kruskal's on graphs", "Prim's builds one tree, Kruskal's builds multiple", "Prim's starts from node, Kruskal's from edges", "No difference"],
+      "correctAnswer": 2,
+      "explanation": "Prim's starts from a node and grows one tree, while Kruskal's starts from edges and builds multiple components."
+    },
+    {
+      "id": "greedy-8",
+      "type": "true_false",
+      "difficulty": "medium",
+      "question": "Huffman coding always produces optimal prefix codes.",
+      "correctAnswer": true,
+      "explanation": "Huffman coding is a greedy algorithm that always produces optimal prefix codes for data compression."
+    },
+    {
+      "id": "greedy-9",
+      "type": "multiple_choice",
+      "difficulty": "easy",
+      "question": "Which algorithm finds the shortest path from a single source?",
+      "options": ["Prim's", "Kruskal's", "Dijkstra's", "Floyd-Warshall"],
+      "correctAnswer": 2,
+      "explanation": "Dijkstra's algorithm finds shortest paths from a single source to all other vertices."
+    },
+    {
+      "id": "greedy-10",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "What is the greedy choice in activity selection problem?",
+      "options": ["Select longest activity", "Select activity ending earliest", "Select activity starting first", "Select random activity"],
+      "correctAnswer": 1,
+      "explanation": "In activity selection, we greedily choose the activity that ends earliest to maximize count."
+    },
+    {
+      "id": "greedy-11",
+      "type": "true_false",
+      "difficulty": "hard",
+      "question": "All greedy algorithms exhibit the greedy choice property and optimal substructure.",
+      "correctAnswer": true,
+      "explanation": "For a greedy algorithm to be correct, it must have both greedy choice property and optimal substructure."
+    },
+    {
+      "id": "greedy-12",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "Which data structure is typically used in Dijkstra's algorithm for efficiency?",
+      "options": ["Stack", "Queue", "Priority Queue", "Linked List"],
+      "correctAnswer": 2,
+      "explanation": "Priority queue (min-heap) is used in Dijkstra's algorithm to efficiently extract the minimum distance vertex."
+    },
+    {
+      "id": "greedy-13",
+      "type": "multiple_choice",
+      "difficulty": "hard",
+      "question": "What is the time complexity of Kruskal's algorithm?",
+      "options": ["O(E log V)", "O(V²)", "O(E + V)", "O(V log E)"],
+      "correctAnswer": 0,
+      "explanation": "Kruskal's algorithm has O(E log V) time complexity due to edge sorting and union-find operations."
+    },
+    {
+      "id": "greedy-14",
+      "type": "true_false",
+      "difficulty": "medium",
+      "question": "The greedy algorithm always works for the 0/1 knapsack problem.",
+      "correctAnswer": false,
+      "explanation": "Greedy approach doesn't guarantee optimal solution for 0/1 knapsack; dynamic programming is needed."
+    },
+    {
+      "id": "greedy-15",
+      "type": "multiple_choice",
+      "difficulty": "easy",
+      "question": "Which algorithm uses a greedy approach for data compression?",
+      "options": ["LZW", "Huffman Coding", "Run-length", "Arithmetic Coding"],
+      "correctAnswer": 1,
+      "explanation": "Huffman coding uses greedy approach to build optimal prefix codes for data compression."
+    },
+    {
+      "id": "greedy-16",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "In job sequencing with deadlines, what is the greedy criterion?",
+      "options": ["Highest profit first", "Shortest job first", "Earliest deadline first", "Longest job first"],
+      "correctAnswer": 0,
+      "explanation": "Job sequencing selects jobs with highest profit first while meeting deadlines."
+    },
+    {
+      "id": "greedy-17",
+      "type": "true_false",
+      "difficulty": "hard",
+      "question": "Prim's algorithm can be implemented using Fibonacci heaps for better time complexity.",
+      "correctAnswer": true,
+      "explanation": "With Fibonacci heaps, Prim's algorithm achieves O(E + V log V) time complexity."
+    },
+    {
+      "id": "greedy-18",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "Which problem demonstrates where greedy algorithm fails?",
+      "options": ["Fractional Knapsack", "Activity Selection", "0/1 Knapsack", "Huffman Coding"],
+      "correctAnswer": 2,
+      "explanation": "0/1 Knapsack problem cannot be optimally solved by greedy approach in all cases."
+    },
+    {
+      "id": "greedy-19",
+      "type": "multiple_choice",
+      "difficulty": "easy",
+      "question": "What does MST stand for in graph algorithms?",
+      "options": ["Minimum Spanning Tree", "Maximum Spanning Tree", "Minimum Search Time", "Maximum Search Tree"],
+      "correctAnswer": 0,
+      "explanation": "MST stands for Minimum Spanning Tree - a tree connecting all vertices with minimum total edge weight."
+    },
+    {
+      "id": "greedy-20",
+      "type": "true_false",
+      "difficulty": "medium",
+      "question": "Kruskal's algorithm uses Union-Find data structure to detect cycles.",
+      "correctAnswer": true,
+      "explanation": "Kruskal's algorithm uses Union-Find (Disjoint Set) data structure to efficiently detect cycles when adding edges."
+    },
+    {
+      "id": "greedy-21",
+      "type": "multiple_choice",
+      "difficulty": "hard",
+      "question": "Which property ensures that a locally optimal choice leads to global optimum?",
+      "options": ["Optimal substructure", "Greedy choice property", "Both", "Neither"],
+      "correctAnswer": 2,
+      "explanation": "Both greedy choice property and optimal substructure are needed for greedy algorithms to guarantee global optimum."
+    },
+    {
+      "id": "greedy-22",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "What is the main advantage of greedy algorithms?",
+      "options": ["Always optimal", "Simple and efficient", "Work for all problems", "Use minimal memory"],
+      "correctAnswer": 1,
+      "explanation": "Greedy algorithms are often simple to implement and efficient, though they don't always guarantee optimal solutions."
     }
   ]
 }

@@ -27,6 +27,197 @@
       "options": ["Stack", "Queue", "Priority Queue", "Linked List"],
       "correctAnswer": 2,
       "explanation": "Priority Queue (Min-Heap) is used to efficiently extract the vertex with minimum distance."
+    },
+    {
+      "id": "graph-4",
+      "type": "multiple_choice",
+      "difficulty": "easy",
+      "question": "Which graph traversal uses a stack?",
+      "options": ["BFS", "DFS", "Dijkstra", "Prim's"],
+      "correctAnswer": 1,
+      "explanation": "DFS uses a stack (either explicitly or through recursion) to explore depth-first."
+    },
+    {
+      "id": "graph-5",
+      "type": "true_false",
+      "difficulty": "medium",
+      "question": "BFS can be used to find the shortest path in unweighted graphs.",
+      "correctAnswer": true,
+      "explanation": "BFS finds the shortest path in unweighted graphs by exploring level by level."
+    },
+    {
+      "id": "graph-6",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "What is the time complexity of DFS?",
+      "options": ["O(V)", "O(E)", "O(V + E)", "O(V²)"],
+      "correctAnswer": 2,
+      "explanation": "DFS visits each vertex and edge once, resulting in O(V + E) time complexity."
+    },
+    {
+      "id": "graph-7",
+      "type": "multiple_choice",
+      "difficulty": "hard",
+      "question": "Which algorithm can detect negative weight cycles in graphs?",
+      "options": ["Dijkstra", "Bellman-Ford", "Floyd-Warshall", "Prim's"],
+      "correctAnswer": 1,
+      "explanation": "Bellman-Ford algorithm can detect negative weight cycles in graphs."
+    },
+    {
+      "id": "graph-8",
+      "type": "true_false",
+      "difficulty": "easy",
+      "question": "Topological sorting only works on directed acyclic graphs (DAGs).",
+      "correctAnswer": true,
+      "explanation": "Topological sorting requires a DAG as cycles make linear ordering impossible."
+    },
+    {
+      "id": "graph-9",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "What is the time complexity of Floyd-Warshall algorithm?",
+      "options": ["O(V²)", "O(V³)", "O(V log V)", "O(V E)"],
+      "correctAnswer": 1,
+      "explanation": "Floyd-Warshall has O(V³) time complexity due to three nested loops over all vertices."
+    },
+    {
+      "id": "graph-10",
+      "type": "multiple_choice",
+      "difficulty": "hard",
+      "question": "Which algorithm finds strongly connected components in a directed graph?",
+      "options": ["Kosaraju's", "Prim's", "Kruskal's", "Dijkstra's"],
+      "correctAnswer": 0,
+      "explanation": "Kosaraju's algorithm finds strongly connected components using two DFS passes."
+    },
+    {
+      "id": "graph-11",
+      "type": "true_false",
+      "difficulty": "medium",
+      "question": "Prim's and Kruskal's algorithms both find Minimum Spanning Trees.",
+      "correctAnswer": true,
+      "explanation": "Both Prim's and Kruskal's algorithms find MST but use different approaches."
+    },
+    {
+      "id": "graph-12",
+      "type": "multiple_choice",
+      "difficulty": "easy",
+      "question": "Which data structure is used in BFS?",
+      "options": ["Stack", "Queue", "Priority Queue", "Heap"],
+      "correctAnswer": 1,
+      "explanation": "BFS uses a queue to process vertices in First-In-First-Out order."
+    },
+    {
+      "id": "graph-13",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "What is the space complexity of BFS?",
+      "options": ["O(1)", "O(V)", "O(E)", "O(V + E)"],
+      "correctAnswer": 1,
+      "explanation": "BFS requires O(V) space for the queue and visited array in the worst case."
+    },
+    {
+      "id": "graph-14",
+      "type": "multiple_choice",
+      "difficulty": "hard",
+      "question": "Which algorithm uses dynamic programming for all-pairs shortest paths?",
+      "options": ["Dijkstra", "Bellman-Ford", "Floyd-Warshall", "A*"],
+      "correctAnswer": 2,
+      "explanation": "Floyd-Warshall uses dynamic programming to compute all pairs shortest paths."
+    },
+    {
+      "id": "graph-15",
+      "type": "true_false",
+      "difficulty": "easy",
+      "question": "DFS can be implemented using recursion.",
+      "correctAnswer": true,
+      "explanation": "DFS can be implemented recursively using the function call stack."
+    },
+    {
+      "id": "graph-16",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "What is the time complexity of Dijkstra's algorithm with Fibonacci heap?",
+      "options": ["O(V²)", "O(E log V)", "O(V log V + E)", "O(V E)"],
+      "correctAnswer": 2,
+      "explanation": "With Fibonacci heap, Dijkstra's algorithm achieves O(V log V + E) time complexity."
+    },
+    {
+      "id": "graph-17",
+      "type": "multiple_choice",
+      "difficulty": "hard",
+      "question": "Which algorithm is used for finding articulation points in a graph?",
+      "options": ["Tarjan's", "Floyd's", "Kruskal's", "Prim's"],
+      "correctAnswer": 0,
+      "explanation": "Tarjan's algorithm finds articulation points (cut vertices) using DFS."
+    },
+    {
+      "id": "graph-18",
+      "type": "true_false",
+      "difficulty": "medium",
+      "question": "A* search algorithm always finds the shortest path if the heuristic is admissible.",
+      "correctAnswer": true,
+      "explanation": "A* guarantees optimal path with an admissible heuristic (never overestimates cost)."
+    },
+    {
+      "id": "graph-19",
+      "type": "multiple_choice",
+      "difficulty": "easy",
+      "question": "Which graph representation uses a 2D array?",
+      "options": ["Adjacency List", "Adjacency Matrix", "Edge List", "Incidence Matrix"],
+      "correctAnswer": 1,
+      "explanation": "Adjacency Matrix uses a 2D array where matrix[i][j] represents edge from i to j."
+    },
+    {
+      "id": "graph-20",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "What is the time complexity of Bellman-Ford algorithm?",
+      "options": ["O(V)", "O(E)", "O(V E)", "O(V²)"],
+      "correctAnswer": 2,
+      "explanation": "Bellman-Ford has O(V E) time complexity due to V-1 relaxation passes over all edges."
+    },
+    {
+      "id": "graph-21",
+      "type": "true_false",
+      "difficulty": "hard",
+      "question": "Johnson's algorithm combines Bellman-Ford and Dijkstra to handle negative weights.",
+      "correctAnswer": true,
+      "explanation": "Johnson's algorithm uses Bellman-Ford for reweighting and then Dijkstra for all pairs shortest paths."
+    },
+    {
+      "id": "graph-22",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "Which algorithm is best for sparse graphs?",
+      "options": ["Adjacency Matrix DFS", "Adjacency List BFS", "Floyd-Warshall", "All are equal"],
+      "correctAnswer": 1,
+      "explanation": "Adjacency List representation with BFS/DFS is more efficient for sparse graphs."
+    },
+    {
+      "id": "graph-23",
+      "type": "multiple_choice",
+      "difficulty": "hard",
+      "question": "What does the Floyd-Warshall algorithm compute?",
+      "options": ["MST", "Single-source shortest paths", "All-pairs shortest paths", "Strongly connected components"],
+      "correctAnswer": 2,
+      "explanation": "Floyd-Warshall computes shortest paths between all pairs of vertices."
+    },
+    {
+      "id": "graph-24",
+      "type": "true_false",
+      "difficulty": "easy",
+      "question": "Graphs can have cycles.",
+      "correctAnswer": true,
+      "explanation": "Graphs can contain cycles, unlike trees which are acyclic."
+    },
+    {
+      "id": "graph-25",
+      "type": "multiple_choice",
+      "difficulty": "medium",
+      "question": "Which algorithm uses a greedy approach for shortest path?",
+      "options": ["Bellman-Ford", "Dijkstra", "Floyd-Warshall", "BFS"],
+      "correctAnswer": 1,
+      "explanation": "Dijkstra's algorithm uses a greedy approach by always expanding the closest vertex."
     }
   ]
 }
